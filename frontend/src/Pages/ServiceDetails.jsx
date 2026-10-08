@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
@@ -8,6 +8,22 @@ const ServiceDetails = () => {
 
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // =========================
+  // ANIMATION STATES
+  // =========================
+  const [imageVisible, setImageVisible] = useState(false);
+  const [detailsVisible, setDetailsVisible] = useState(false);
+  const [featuresVisible, setFeaturesVisible] = useState(false);
+  const [ctaVisible, setCtaVisible] = useState(false);
+
+  // =========================
+  // REFS
+  // =========================
+  const imageRef = useRef(null);
+  const detailsRef = useRef(null);
+  const featuresRef = useRef(null);
+  const ctaRef = useRef(null);
 
   // =========================
   // GET SINGLE SERVICE
@@ -31,6 +47,49 @@ const ServiceDetails = () => {
 
     getService();
   }, [id]);
+
+  // =========================
+  // SCROLL / ENTRANCE ANIMATION
+  // =========================
+  useEffect(() => {
+    if (!service) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          if (entry.target === imageRef.current) {
+            setImageVisible(true);
+          }
+
+          if (entry.target === detailsRef.current) {
+            setDetailsVisible(true);
+          }
+
+          if (entry.target === featuresRef.current) {
+            setFeaturesVisible(true);
+          }
+
+          if (entry.target === ctaRef.current) {
+            setCtaVisible(true);
+          }
+
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+
+    if (imageRef.current) observer.observe(imageRef.current);
+    if (detailsRef.current) observer.observe(detailsRef.current);
+    if (featuresRef.current) observer.observe(featuresRef.current);
+    if (ctaRef.current) observer.observe(ctaRef.current);
+
+    return () => observer.disconnect();
+  }, [service]);
 
   // =========================
   // LOADING
@@ -76,7 +135,7 @@ const ServiceDetails = () => {
   }
 
   // =========================
-  // SERVICE FEATURES
+  // FEATURES
   // =========================
   const features = service.features || [];
 
@@ -105,7 +164,24 @@ const ServiceDetails = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
           {/* ================= IMAGE ================= */}
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
+          <div
+            ref={imageRef}
+            className={`
+              relative
+              rounded-3xl
+              overflow-hidden
+              shadow-2xl
+              group
+              transition-all
+              duration-1000
+              ease-out
+              ${
+                imageVisible
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-16"
+              }
+            `}
+          >
             <img
               src={service.image}
               alt={service.title}
@@ -133,7 +209,19 @@ const ServiceDetails = () => {
           </div>
 
           {/* ================= DETAILS ================= */}
-          <div>
+          <div
+            ref={detailsRef}
+            className={`
+              transition-all
+              duration-1000
+              ease-out
+              ${
+                detailsVisible
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-16"
+              }
+            `}
+          >
 
             {/* CATEGORY */}
             {service.category && (
@@ -172,7 +260,7 @@ const ServiceDetails = () => {
               {service.description}
             </p>
 
-            {/* ================= TALK TO EXPERTS ================= */}
+            {/* TALK TO EXPERTS */}
             <a
               href="https://mail.google.com/mail/?view=cm&fs=1&to=marketing%40traderankmedia.com"
               target="_blank"
@@ -201,13 +289,25 @@ const ServiceDetails = () => {
                 →
               </span>
             </a>
-
           </div>
         </div>
 
         {/* ================= FEATURES / APPROACH ================= */}
         {features.length > 0 && (
-          <div className="mt-24">
+          <div
+            ref={featuresRef}
+            className={`
+              mt-24
+              transition-all
+              duration-1000
+              ease-out
+              ${
+                featuresVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-16"
+              }
+            `}
+          >
 
             {/* HEADING */}
             <div className="text-center mb-12">
@@ -252,7 +352,6 @@ const ServiceDetails = () => {
                 gap-6
               "
             >
-
               {features.map((feature, index) => (
                 <div
                   key={feature._id || index}
@@ -286,12 +385,16 @@ const ServiceDetails = () => {
                       text-lg
                       font-black
                       mb-6
+                      transition-all
+                      duration-500
+                      group-hover:scale-110
+                      group-hover:rotate-6
                     "
                   >
                     {String(index + 1).padStart(2, "0")}
                   </div>
 
-                  {/* FEATURE TITLE */}
+                  {/* TITLE */}
                   <h3
                     className="
                       text-2xl
@@ -303,7 +406,7 @@ const ServiceDetails = () => {
                     {feature.title}
                   </h3>
 
-                  {/* FEATURE DESCRIPTION */}
+                  {/* DESCRIPTION */}
                   <p
                     className="
                       text-gray-600
@@ -316,7 +419,6 @@ const ServiceDetails = () => {
 
                 </div>
               ))}
-
             </div>
           </div>
         )}
@@ -332,7 +434,8 @@ const ServiceDetails = () => {
 
         {/* ================= BOTTOM CTA ================= */}
         <div
-          className="
+          ref={ctaRef}
+          className={`
             mt-24
             rounded-3xl
             bg-black
@@ -341,7 +444,15 @@ const ServiceDetails = () => {
             sm:px-12
             text-center
             shadow-2xl
-          "
+            transition-all
+            duration-1000
+            ease-out
+            ${
+              ctaVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-16"
+            }
+          `}
         >
 
           <h2
@@ -404,4 +515,3 @@ const ServiceDetails = () => {
 };
 
 export default ServiceDetails;
-
