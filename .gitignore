@@ -1,0 +1,17 @@
+node_modules/
+**/node_modules/
+
+dist/
+**/dist/
+
+.env
+**/.env
+
+config.js
+**/config.js
+
+push-error.txt
+
+*.log
+.DS_Storeo
+
