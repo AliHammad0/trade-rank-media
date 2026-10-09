@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import {
   BrowserRouter,
@@ -6,6 +5,9 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Main Pages
 import Header from "./Pages/Header";
@@ -81,97 +83,52 @@ const Home = () => {
 const App = () => {
   return (
     <BrowserRouter>
+      {/* Global Toast Notifications */}
+      <ToastContainer
+        position="top-center"
+        autoClose={3500}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+        limit={3}
+      />
 
-      {/* Scroll page to top whenever route changes */}
       <ScrollToTop />
 
-      {/* Header */}
       <Header />
 
       <Routes>
-
-        {/* ========================= */}
         {/* Home */}
-        {/* ========================= */}
+        <Route path="/" element={<Home />} />
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
-        <Route path="*" element={<P404 />} />
-
-        {/* ========================= */}
         {/* Main Pages */}
-        {/* ========================= */}
-
-        <Route
-          path="/contact"
-          element={<Contact />}
-        />
-
-        <Route
-          path="/blog"
-          element={<Blog />}
-        />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/blog" element={<Blog />} />
 
         <Route
           path="/auth/verify-email/:token"
           element={<ActiveAccount />}
         />
 
-        <Route
-          path="/services"
-          element={<Services />}
-        />
+        <Route path="/services" element={<Services />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<PreSignup />} />
+        <Route path="/process" element={<Process />} />
+        <Route path="/reviews" element={<Testimonials />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/team" element={<Team />} />
 
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/signup"
-          element={<PreSignup />}
-        />
-
-        <Route
-          path="/process"
-          element={<Process />}
-        />
-
-        <Route
-          path="/reviews"
-          element={<Testimonials />}
-        />
-
-        <Route
-          path="/faq"
-          element={<FAQ />}
-        />
-
-        <Route
-          path="/about"
-          element={<AboutUs />}
-        />
-
-        <Route
-          path="/team"
-          element={<Team />}
-        />
-
-        {/* ========================= */}
         {/* Single Service */}
-        {/* ========================= */}
-
         <Route
           path="/services/:id"
           element={<ServiceDetails />}
         />
 
-        {/* ========================= */}
         {/* Old Static Services */}
-        {/* ========================= */}
-
         <Route
           path="/service-0"
           element={<div>Web Development</div>}
@@ -197,11 +154,7 @@ const App = () => {
           element={<div>Social Media Marketing</div>}
         />
 
-        {/* ========================= */}
-        {/* ADMIN ROUTES */}
-        {/* ========================= */}
-
-        {/* Admin Dashboard */}
+        {/* Admin Routes */}
         <Route
           path="/admin"
           element={
@@ -211,7 +164,6 @@ const App = () => {
           }
         />
 
-        {/* Create Service */}
         <Route
           path="/admin/create-service"
           element={
@@ -221,7 +173,6 @@ const App = () => {
           }
         />
 
-        {/* All Services */}
         <Route
           path="/admin/services"
           element={
@@ -231,7 +182,6 @@ const App = () => {
           }
         />
 
-        {/* Update Service */}
         <Route
           path="/admin/update-service/:id"
           element={
@@ -241,14 +191,13 @@ const App = () => {
           }
         />
 
+        {/* 404 */}
+        <Route path="*" element={<P404 />} />
       </Routes>
 
-      {/* Footer */}
       <Footer />
-
     </BrowserRouter>
   );
 };
 
 export default App;
-
