@@ -1,13 +1,15 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
-const API_URL = "https://trade-rank-media-hammad.vercel.app/api/v1";
 
 const Services = () => {
   const [services, setServices] = useState([]);
   const [live, setLive] = useState(false);
 
+  // =========================================================
+  // COUNTER STATES
+  // =========================================================
   const [counterValues, setCounterValues] = useState({
     roi: 0,
     clientsScaled: 0,
@@ -15,29 +17,32 @@ const Services = () => {
     pageLoad: 0,
   });
 
+  // =========================================================
+  // STATS SECTION REF
+  // =========================================================
   const statsRef = useRef(null);
 
   useEffect(() => {
     const getServices = async () => {
       try {
         const response = await axios.get(
-          `${API_URL}/service/all`
+          "http://localhost:8080/api/v1/service/all"
         );
 
         if (response.data.ok) {
-          setServices(response.data.services || []);
+          setServices(response.data.services);
         }
       } catch (error) {
-        console.error(
-          "Services API Error:",
-          error.response?.data || error.message
-        );
+        console.log("Services API Error:", error.message);
       }
     };
 
     getServices();
   }, []);
 
+  // =========================================================
+  // START ANIMATION WHEN STATS COME INTO VIEW
+  // =========================================================
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -46,7 +51,9 @@ const Services = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      {
+        threshold: 0.3,
+      }
     );
 
     if (statsRef.current) {
@@ -56,6 +63,9 @@ const Services = () => {
     return () => observer.disconnect();
   }, []);
 
+  // =========================================================
+  // SMOOTH COUNTER ANIMATION
+  // =========================================================
   useEffect(() => {
     if (!live) return;
 
@@ -68,11 +78,14 @@ const Services = () => {
 
     const duration = 1800;
     const startTime = performance.now();
+
     let animationFrame;
 
     const animate = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
+
+      // Smooth ease-out animation
       const eased = 1 - Math.pow(1 - progress, 4);
 
       setCounterValues({
@@ -109,7 +122,7 @@ const Services = () => {
       progress: 88,
     },
     {
-      value: `${counterValues.pageLoad}s`,
+      value: `${counterValues.pageLoad}S`,
       title: "Avg Page Load",
       progress: 95,
     },
@@ -117,6 +130,7 @@ const Services = () => {
 
   return (
     <section className="min-h-screen bg-white px-4 sm:px-6 lg:px-10 py-20 font-[Arial,sans-serif] font-bold">
+      
       {/* Heading */}
       <div className="max-w-7xl mx-auto text-center mb-16">
         <p className="text-red-600 uppercase tracking-widest text-sm font-black mb-3">
@@ -129,8 +143,8 @@ const Services = () => {
         </h1>
 
         <p className="mt-5 text-gray-600 max-w-3xl mx-auto text-base sm:text-lg leading-7 font-semibold">
-          We provide powerful digital services designed to grow your
-          brand, increase visibility, and generate real business results.
+          We provide powerful digital services designed to grow your brand,
+          increase visibility, and generate real business results.
         </p>
       </div>
 
@@ -140,33 +154,112 @@ const Services = () => {
           <Link
             key={service._id}
             to={`/services/${service._id}`}
-            className="group relative block bg-white border-2 border-gray-200 rounded-3xl overflow-hidden shadow-lg transition-all duration-500 hover:-translate-y-3 hover:border-blue-600 hover:shadow-2xl cursor-pointer"
+            className="
+              group
+              relative
+              block
+              bg-white
+              border-2
+              border-gray-200
+              rounded-3xl
+              overflow-hidden
+              shadow-lg
+              transition-all
+              duration-500
+              hover:-translate-y-3
+              hover:border-blue-600
+              hover:shadow-2xl
+              cursor-pointer
+            "
           >
             {/* Image */}
             <div className="relative h-52 overflow-hidden">
               <img
                 src={service.image}
                 alt={service.title}
-                loading="lazy"
-                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                className="
+                  w-full
+                  h-full
+                  object-cover
+                  transition-all
+                  duration-700
+                  group-hover:scale-110
+                "
               />
 
-              <div className="absolute top-4 left-4 w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-red-600 text-xl font-black shadow-lg transition-all duration-500 group-hover:bg-black group-hover:text-white">
+              {/* Number */}
+              <div
+                className="
+                  absolute
+                  top-4
+                  left-4
+                  w-14
+                  h-14
+                  rounded-2xl
+                  bg-white
+                  flex
+                  items-center
+                  justify-center
+                  text-red-600
+                  text-xl
+                  font-black
+                  shadow-lg
+                  transition-all
+                  duration-500
+                  group-hover:bg-black
+                  group-hover:text-white
+                "
+              >
                 {String(index + 1).padStart(2, "0")}
               </div>
             </div>
 
             {/* Content */}
             <div className="p-7">
-              <h3 className="text-2xl font-black text-black leading-tight">
+              <h3
+                className="
+                  text-2xl
+                  font-black
+                  text-black
+                  leading-tight
+                  transition-colors
+                  duration-500
+                  group-hover:text-black
+                "
+              >
                 {service.title}
               </h3>
 
-              <p className="mt-4 text-gray-600 text-base leading-7 font-semibold line-clamp-2">
+              <p
+                className="
+                  mt-4
+                  text-gray-600
+                  text-base
+                  leading-7
+                  font-semibold
+                  transition-colors
+                  duration-500
+                  group-hover:text-gray-600
+                  line-clamp-2
+                "
+              >
                 {service.description}
               </p>
 
-              <div className="mt-7 inline-flex items-center gap-2 text-red-600 font-black transition-all duration-500 group-hover:text-black group-hover:gap-4">
+              <div
+                className="
+                  mt-7
+                  inline-flex
+                  items-center
+                  gap-2
+                  text-red-600
+                  font-black
+                  transition-all
+                  duration-500
+                  group-hover:text-black
+                  group-hover:gap-4
+                "
+              >
                 Explore <span className="text-xl">→</span>
               </div>
             </div>
@@ -182,7 +275,19 @@ const Services = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white border-2 border-gray-200 rounded-3xl p-7 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-blue-600 hover:shadow-2xl"
+            className="
+              bg-white
+              border-2
+              border-gray-200
+              rounded-3xl
+              p-7
+              shadow-lg
+              transition-all
+              duration-500
+              hover:-translate-y-2
+              hover:border-blue-600
+              hover:shadow-2xl
+            "
           >
             <h3 className="text-4xl font-black text-black">
               {stat.value}
@@ -198,7 +303,7 @@ const Services = () => {
                 style={{
                   width: live ? `${stat.progress}%` : "0%",
                 }}
-              />
+              ></div>
             </div>
           </div>
         ))}
@@ -208,3 +313,4 @@ const Services = () => {
 };
 
 export default Services;
+

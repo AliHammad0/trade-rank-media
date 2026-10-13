@@ -1,3 +1,4 @@
+```jsx
 import React, { useEffect } from "react";
 import {
   BrowserRouter,
@@ -37,14 +38,10 @@ import ActiveAccount from "./Pages/ActiveAccount";
 
 // Blog
 import Blog from "./Pages/Blog";
-
-// Admin Route Protection
 import AdminRoute from "./Admin/AdminRoute";
 import P404 from "./Pages/P404";
 
-// =========================
 // Scroll To Top
-// =========================
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -52,16 +49,14 @@ const ScrollToTop = () => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: "instant",
+      behavior: "auto",
     });
   }, [pathname]);
 
   return null;
 };
 
-// =========================
 // Home Page
-// =========================
 const Home = () => {
   return (
     <>
@@ -77,13 +72,10 @@ const Home = () => {
   );
 };
 
-// =========================
 // App
-// =========================
 const App = () => {
   return (
     <BrowserRouter>
-      {/* Global Toast Notifications */}
       <ToastContainer
         position="top-center"
         autoClose={3500}
@@ -97,17 +89,13 @@ const App = () => {
       />
 
       <ScrollToTop />
-
       <Header />
 
       <Routes>
-        {/* Home */}
         <Route path="/" element={<Home />} />
 
-        {/* Main Pages */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
-
         <Route
           path="/auth/verify-email/:token"
           element={<ActiveAccount />}
@@ -122,39 +110,17 @@ const App = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/team" element={<Team />} />
 
-        {/* Single Service */}
         <Route
           path="/services/:id"
           element={<ServiceDetails />}
         />
 
-        {/* Old Static Services */}
-        <Route
-          path="/service-0"
-          element={<div>Web Development</div>}
-        />
+        <Route path="/service-0" element={<div>Web Development</div>} />
+        <Route path="/service-1" element={<div>Digital Marketing</div>} />
+        <Route path="/service-2" element={<div>SEO Services</div>} />
+        <Route path="/service-3" element={<div>Graphic Design</div>} />
+        <Route path="/service-4" element={<div>Social Media Marketing</div>} />
 
-        <Route
-          path="/service-1"
-          element={<div>Digital Marketing</div>}
-        />
-
-        <Route
-          path="/service-2"
-          element={<div>SEO Services</div>}
-        />
-
-        <Route
-          path="/service-3"
-          element={<div>Graphic Design</div>}
-        />
-
-        <Route
-          path="/service-4"
-          element={<div>Social Media Marketing</div>}
-        />
-
-        {/* Admin Routes */}
         <Route
           path="/admin"
           element={
@@ -191,7 +157,6 @@ const App = () => {
           }
         />
 
-        {/* 404 */}
         <Route path="*" element={<P404 />} />
       </Routes>
 
@@ -201,3 +166,4 @@ const App = () => {
 };
 
 export default App;
+```
