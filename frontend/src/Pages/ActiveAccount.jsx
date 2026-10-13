@@ -1,7 +1,8 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+const API_URL = "https://trade-rank-media-hammad.vercel.app/api/v1";
 
 const ActiveAccount = () => {
   const { token } = useParams();
@@ -11,68 +12,43 @@ const ActiveAccount = () => {
   const [success, setSuccess] = useState(false);
   const [status, setStatus] = useState("");
 
-  // Prevent API from being called twice in React StrictMode
   const activatedRef = useRef(false);
 
   useEffect(() => {
     let redirectTimer;
 
-    // Stop duplicate API call
-    if (activatedRef.current) {
-      return;
-    }
+    if (activatedRef.current) return;
 
     activatedRef.current = true;
 
     const activateAccount = async () => {
       try {
-        // Token check
         if (!token) {
           setSuccess(false);
           setStatus("Invalid verification link.");
-          setLoading(false);
           return;
         }
 
-        // Send token to backend
         const response = await axios.post(
-          "http://localhost:8080/api/v1/users/signup",
-          {
-            token: token,
-          }
+          `${API_URL}/users/signup`,
+          { token }
         );
 
         const data = response.data;
 
         console.log("Account Activation Response:", data);
 
-        // Backend failure
-        if (data.ok === false) {
-          setSuccess(false);
-          setStatus(
-            data.error ||
-              data.message ||
-              "Account activation failed."
-          );
-          setLoading(false);
-          return;
-        }
-
-        // Backend success
         if (data.ok === true) {
           setSuccess(true);
-
           setStatus(
             data.message ||
               "Your account has been successfully created!"
           );
 
-          // Save login token if backend returns it
           if (data.token) {
             localStorage.setItem("token", data.token);
           }
 
-          // Save user if returned
           if (data.user) {
             localStorage.setItem(
               "user",
@@ -80,18 +56,17 @@ const ActiveAccount = () => {
             );
           }
 
-          // Redirect to login
           redirectTimer = setTimeout(() => {
             navigate("/login");
           }, 3000);
-
-          return;
+        } else {
+          setSuccess(false);
+          setStatus(
+            data.message ||
+              data.error ||
+              "Account activation failed."
+          );
         }
-
-        // Unexpected response
-        setSuccess(false);
-        setStatus("Unexpected server response.");
-
       } catch (error) {
         console.error(
           "Account Activation Error:",
@@ -99,10 +74,9 @@ const ActiveAccount = () => {
         );
 
         setSuccess(false);
-
         setStatus(
-          error.response?.data?.error ||
-            error.response?.data?.message ||
+          error.response?.data?.message ||
+            error.response?.data?.error ||
             "Account activation failed. Please try again."
         );
       } finally {
@@ -112,7 +86,6 @@ const ActiveAccount = () => {
 
     activateAccount();
 
-    // Cleanup timer
     return () => {
       if (redirectTimer) {
         clearTimeout(redirectTimer);
@@ -122,24 +95,16 @@ const ActiveAccount = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 relative overflow-hidden">
-
-      {/* Background */}
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-pink-500/30 rounded-full blur-[120px]" />
 
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-orange-500/30 rounded-full blur-[120px]" />
 
-      {/* Card */}
       <div className="relative w-full max-w-md">
-
         <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl p-8 text-center">
-
-          {/* Loading */}
           {loading && (
             <>
               <div className="mx-auto mb-6 w-20 h-20 rounded-full bg-pink-500/10 flex items-center justify-center">
-
                 <div className="animate-spin rounded-full h-12 w-12 border-4 border-white/10 border-t-pink-500 border-r-orange-400" />
-
               </div>
 
               <h1 className="text-2xl font-bold text-white mb-3">
@@ -147,17 +112,15 @@ const ActiveAccount = () => {
               </h1>
 
               <p className="text-gray-400">
-                Please wait while we verify your email
-                and create your account...
+                Please wait while we verify your email and create
+                your account...
               </p>
             </>
           )}
 
-          {/* Success */}
           {!loading && success && (
             <>
               <div className="mx-auto mb-6 w-20 h-20 rounded-full bg-green-500/10 border border-green-400/20 flex items-center justify-center">
-
                 <svg
                   className="w-10 h-10 text-green-400"
                   fill="none"
@@ -171,16 +134,13 @@ const ActiveAccount = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-
               </div>
 
               <h1 className="text-2xl font-bold text-white mb-3">
                 Account Created!
               </h1>
 
-              <p className="text-green-400 mb-3">
-                {status}
-              </p>
+              <p className="text-green-400 mb-3">{status}</p>
 
               <p className="text-gray-500 text-sm">
                 Redirecting you to login in 3 seconds...
@@ -188,11 +148,9 @@ const ActiveAccount = () => {
             </>
           )}
 
-          {/* Error */}
           {!loading && !success && (
             <>
               <div className="mx-auto mb-6 w-20 h-20 rounded-full bg-red-500/10 border border-red-400/20 flex items-center justify-center">
-
                 <svg
                   className="w-10 h-10 text-red-400"
                   fill="none"
@@ -206,16 +164,13 @@ const ActiveAccount = () => {
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-
               </div>
 
               <h1 className="text-2xl font-bold text-white mb-3">
                 Activation Failed
               </h1>
 
-              <p className="text-red-400 mb-6">
-                {status}
-              </p>
+              <p className="text-red-400 mb-6">{status}</p>
 
               <button
                 onClick={() => navigate("/signup")}
@@ -225,7 +180,6 @@ const ActiveAccount = () => {
               </button>
             </>
           )}
-
         </div>
       </div>
     </div>
