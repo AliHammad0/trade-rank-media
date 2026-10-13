@@ -1,197 +1,253 @@
-
 import User from "../model/users.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import AWS from "aws-sdk";
-import nodemailer from "nodemailer";
-import { nanoid } from "nanoid";
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+import bcrypt from 'bcryptjs';
+import * as config from '../config/config.js';
+import jwt from 'jsonwebtoken';
 import sendMail from "../helper/sendMail.js";
+import { nanoid } from "nanoid";
 import sendUserAndToken from "../helper/sendUserAndToken.js";
+import nodemailer from 'nodemailer';
 
-const emailRegex =
-  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-const SECRET_KEY = process.env.SECRET_KEY;
-const CLIENT_URL = process.env.CLIENT_URL;
-
-const AWSSES = new AWS.SES({
-  region: process.env.AWS_REGION || "ap-south-1",
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-});
-
-// Pre-signup: Send verification email
+// preSignup check for email is real or fake with AWS
 export const preSignup = async (req, res) => {
-  try {
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.json({
-        ok: false,
-        message: "Email and password are required",
-      });
-    }
+        // Both fields are required
+        if (!email || !password) {
+            return res.json({ error: "Email and password are required" });
+        }
 
-    const normalizedEmail = email.trim().toLowerCase();
+        // Check if the email is already taken
+        const user = await User.findOne({ email });
+        if (user) {
+            return res.json({ error: "Email is already taken, please choose a different one" });
+        }
 
-    if (!emailRegex.test(normalizedEmail)) {
-      return res.json({
-        ok: false,
-        message: "Invalid email address",
-      });
-    }
+        // Check if the email is valid
+        if (!emailRegex.test(email)) {
+            return res.json({ error: "Invalid email address. Please check and try again." });
+        }
 
-    if (!passwordRegex.test(password)) {
-      return res.json({
-        ok: false,
-        message:
-          "Password must be at least 8 characters and contain uppercase, lowercase, number, and special character.",
-      });
-    }
+        // Check if the password is valid
+        if (!password || !passwordRegex.test(password)) {
+            return res.json({
+                error: 'Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character.'
+            });
+        }
 
-    if (!SECRET_KEY || !CLIENT_URL) {
-      throw new Error("SECRET_KEY or CLIENT_URL is missing");
-    }
+        // Generate a token with email and password
+        const token = jwt.sign({ email, password }, config.SECRET_KEY, { expiresIn: "4h" });
 
-    const existingUser = await User.findOne({
-      email: normalizedEmail,
-    });
+        // Styled email content with gradient background and button
+        const emailContent = `
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f06;
+        background: linear-gradient(135deg, #f06, #f79c42);
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .header {
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        padding: 20px;
+        text-align: center;
+        color: white;
+      }
+      h1 {
+        font-size: 24px;
+        margin: 0;
+      }
+      .content {
+        padding: 20px;
+        text-align: center;
+        color: #333333;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 20px;
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        color: #ffffff !important;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 16px;
+      }
+      .footer {
+        text-align: center;
+        color: #999999;
+        font-size: 13px;
+        padding: 20px;
+      }
 
-    if (existingUser) {
-      return res.json({
-        ok: false,
-        message: "Email is already registered",
-      });
-    }
-
-    const token = jwt.sign(
-      { email: normalizedEmail, password },
-      SECRET_KEY,
-      { expiresIn: "4h" }
-    );
-
-    const verificationUrl =
-      `${CLIENT_URL}/auth/verify-email/${token}`;
-
-    const emailContent = `
-      <div style="font-family:Arial,sans-serif;padding:25px;text-align:center">
+      @media only screen and (max-width: 480px) {
+        h1 {
+          font-size: 20px;
+        }
+        .content {
+          padding: 15px;
+          font-size: 15px;
+        }
+        .button {
+          font-size: 15px;
+          padding: 10px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
         <h1>Welcome to HammadFinds</h1>
-        <p>Thank you for registering with us!</p>
-        <p>Click below to verify your email address.</p>
-        <a href="${verificationUrl}"
-          style="display:inline-block;padding:12px 20px;background:#ff7e5f;color:white;text-decoration:none;border-radius:5px">
-          Verify Account
-        </a>
-        <p>If you did not create an account, ignore this email.</p>
       </div>
-    `;
+      <div class="content">
+        <p>Thank you for registering with us!</p>
+        <p>Please click the button below to verify your account:</p>
+        <a href="${config.CLIENT_URL}/auth/verify-email/${token}" class="button">Verify Account</a>
+      </div>
+      <div class="footer">
+        <p>If you did not create an account, no further action is required.</p>
+        <p>Thank you for choosing HammadFinds!</p>
+      </div>
+    </div>
+  </body>
+</html>
+`;
 
-    const emailParams = sendMail(
-      normalizedEmail,
-      emailContent,
-      "Verify your email address"
-    );
+        const emailParams = sendMail(email, emailContent, "Verify your email address");
 
-    const data = await AWSSES.sendEmail(emailParams).promise();
+        // Sending email using AWS SES
+        config.AWSSES.sendEmail(emailParams, (err, data) => {
+            if (err) {
+                return res.json({
+                    error: "Email sending failed",
+                    err: err.message
+                });
+            }
+            return res.json({
+                message: "Verification email sent successfully. Please check your email box to verify your account.",
+                data
+            });
+        });
 
-    return res.json({
-      ok: true,
-      message: "Verification email sent successfully",
-      data,
-    });
-  } catch (error) {
-    console.error("Pre-signup Error:", error.message);
-
-    return res.json({
-      ok: false,
-      message: "Failed to send verification email",
-    });
-  }
+    } catch (error) {
+        return res.json({
+            message: "An error occurred",
+            error: error.message
+        });
+    }
 };
 
-// Signup
+// Signup: Create a new account
+
+
 export const signup = async (req, res) => {
   try {
     const { token } = req.body;
 
+    // Token required
     if (!token) {
       return res.json({
         ok: false,
-        message: "Verification token is required",
+        error: "Verification token is required",
       });
     }
 
-    if (!SECRET_KEY) {
-      throw new Error("SECRET_KEY is missing");
-    }
-
+    // Verify token
     let decoded;
 
     try {
-      decoded = jwt.verify(token, SECRET_KEY);
-    } catch {
+      decoded = jwt.verify(token, config.SECRET_KEY);
+    } catch (error) {
       return res.json({
         ok: false,
-        message: "Verification link is invalid or expired",
+        error: "Verification link is invalid or expired",
       });
     }
 
     const { email, password } = decoded;
 
+    // Validate email
     if (!email || !emailRegex.test(email)) {
       return res.json({
         ok: false,
-        message: "Invalid email address",
+        error: "Invalid email address",
       });
     }
 
+    // Validate password
     if (!password || !passwordRegex.test(password)) {
       return res.json({
         ok: false,
-        message: "Password does not meet security requirements",
+        error:
+          "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character.",
       });
     }
 
+    // Check existing user
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.json({
         ok: true,
         alreadyActivated: true,
-        message: "Account already exists. Please login.",
+        message: "Account is already activated. Please login.",
       });
     }
 
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Create user
     const newUser = await User.create({
       email,
       password: hashedPassword,
       username: nanoid(12),
     });
 
+    // Remove password from response
     const userResponse = newUser.toObject();
     delete userResponse.password;
 
     return res.json({
       ok: true,
-      message: "Account created successfully",
+      message: "Account created successfully. You can now login.",
       user: userResponse,
     });
+
   } catch (error) {
-    console.error("Signup Error:", error.message);
+    console.error("Signup Error:", error);
 
     return res.json({
       ok: false,
-      message: "Failed to create user",
+      error: "Failed to create user",
+      message: error.message,
     });
   }
 };
 
-// Login
+
+
+
+///login api here
+
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -199,7 +255,7 @@ export const login = async (req, res) => {
     if (!email || !password) {
       return res.json({
         ok: false,
-        message: "Email and password are required",
+        error: "Email and password are required",
       });
     }
 
@@ -210,72 +266,82 @@ export const login = async (req, res) => {
     if (!user) {
       return res.json({
         ok: false,
-        message: "Invalid email or password",
+        error: "Invalid email or password",
       });
     }
 
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(
+      password,
+      user.password
+    );
 
     if (!match) {
       return res.json({
         ok: false,
-        message: "Invalid email or password",
+        error: "Invalid email or password",
       });
     }
 
+    // Login successful
     return sendUserAndToken(req, res, user);
+
   } catch (error) {
-    console.error("Login Error:", error.message);
+    console.log("Login Error:", error);
 
     return res.json({
       ok: false,
-      message: "Login failed",
+      error: "Login failed",
     });
   }
 };
 
-// Contact Us
 export const contactUs = async (req, res) => {
-  try {
     const { name, email, subject, message } = req.body;
 
     if (!name || !email || !subject || !message) {
-      return res.json({
-        ok: false,
-        message: "All fields are required",
-      });
+        return res.status(400).json({ error: 'All fields are required' });
     }
 
-    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-      throw new Error("Gmail environment variables are missing");
+    try {
+        // Gmail SMTP setup
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'alihammadzk@gmail.com', // 👈 your email
+                pass: 'mmdh oujd cmjz mmtj' // 👈 generated app password (not Gmail password)
+            }
+        });
+
+        const mailOptions = {
+            from: email,
+            to: 'alihammadzk@gmail.com',
+            subject: `Contact Form Message: ${subject}`,
+            html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        res.json({ success: true, message: 'Message sent successfully!' });
+
+    } catch (error) {
+        console.error('Email error:', error);
+        res.json({ error: 'Email failed to send', detail: error.message });
     }
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    });
-
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      replyTo: email,
-      to: process.env.GMAIL_USER,
-      subject: `Contact Form Message: ${subject}`,
-      text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`,
-    });
-
-    return res.json({
-      ok: true,
-      message: "Message sent successfully",
-    });
-  } catch (error) {
-    console.error("Contact Email Error:", error.message);
-
-    return res.json({
-      ok: false,
-      message: "Email failed to send",
-    });
-  }
 };
+
+
+
+
+
+
+
+
+
+

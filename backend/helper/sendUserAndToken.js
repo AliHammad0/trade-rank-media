@@ -1,17 +1,18 @@
-
-import jwt from "jsonwebtoken";
+import * as config from '../config/config.js';
+import jwt from 'jsonwebtoken';
 
 const sendUserAndToken = (req, res, user) => {
   try {
     const token = jwt.sign(
       { id: user._id },
-      process.env.SECRET_KEY,
+      config.SECRET_KEY,
       { expiresIn: "1h" }
     );
 
+    // Refresh Token
     const refreshToken = jwt.sign(
       { id: user._id },
-      process.env.REFRESH_KEY,
+      config.REFRESH_KEY,
       { expiresIn: "1w" }
     );
 
@@ -22,9 +23,10 @@ const sendUserAndToken = (req, res, user) => {
       ok: true,
       message: "Login successful",
       user,
-      token,
-      refreshToken,
+      token: token,
+      refreshToken: refreshToken,
     });
+
   } catch (error) {
     res.json({
       ok: false,
