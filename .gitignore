@@ -7,11 +7,9 @@ dist/
 .env
 **/.env
 
-config.js
-**/config.js
+backend/config/config.js
 
 push-error.txt
 
 *.log
-.DS_Storeo
-
+.DS_Store
