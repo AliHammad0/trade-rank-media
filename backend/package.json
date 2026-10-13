@@ -1,5 +1,8 @@
 {
   "name": "trade-rank-media-backend",
   "version": "1.0.0",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "nanoid": "^6.0.2"
+  }
 }
