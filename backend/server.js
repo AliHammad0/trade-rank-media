@@ -1,6 +1,5 @@
 
 import express from "express";
-import * as config from "./config/config.js";
 import DBCONFIG from "./config/DBconfig.js";
 import serviceroutes from "./routes/services.js";
 import usersRoutes from "./routes/users.js";
