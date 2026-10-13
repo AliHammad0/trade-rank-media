@@ -1,6 +1,7 @@
+
 const sendMail = (email, emailContent, subject) => {
   return {
-    Source: process.env.AWS_SES_EMAIL,
+    Source: process.env.SES_SENDER_EMAIL,
     Destination: {
       ToAddresses: [email],
     },
