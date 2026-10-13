@@ -13,13 +13,16 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.json({
+    ok: true,
+    message: "Trade Rank Media API is running",
+  });
+});
+
 app.use("/api/v1/service", serviceroutes);
 app.use("/api/v1/users", usersRoutes);
 
 DBCONFIG();
-
-app.get("/", (req, res) => {
-  res.json({ ok: true, message: "Trade Rank Media API is running" });
-});
 
 export default app;
