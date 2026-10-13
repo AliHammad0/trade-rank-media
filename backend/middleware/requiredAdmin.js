@@ -1,10 +1,9 @@
+
 import jwt from "jsonwebtoken";
 import User from "../model/users.js";
-import * as config from "../config/config.js";
 
 export const requiredAdmin = async (req, res, next) => {
   try {
-    // Authorization header
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -14,7 +13,6 @@ export const requiredAdmin = async (req, res, next) => {
       });
     }
 
-    // Bearer TOKEN
     const token = authHeader.split(" ")[1];
 
     if (!token) {
@@ -24,13 +22,11 @@ export const requiredAdmin = async (req, res, next) => {
       });
     }
 
-    // Verify JWT
     const decoded = jwt.verify(
       token,
-      config.SECRET_KEY
+      process.env.SECRET_KEY
     );
 
-    // Get user from database
     const user = await User.findById(decoded.id);
 
     if (!user) {
@@ -40,7 +36,6 @@ export const requiredAdmin = async (req, res, next) => {
       });
     }
 
-    // Check account status
     if (!user.isActive) {
       return res.json({
         ok: false,
@@ -48,22 +43,18 @@ export const requiredAdmin = async (req, res, next) => {
       });
     }
 
-    // Check Admin
     if (!user.isAdmin) {
       return res.json({
         ok: false,
-        message:
-          "You are not Admin, so you cannot access Admin Dashboard",
+        message: "You are not Admin, so you cannot access Admin Dashboard",
       });
     }
 
-    // Save user in request
     req.user = user;
 
     next();
-
   } catch (error) {
-    console.log("Admin Middleware Error:", error);
+    console.log("Admin Middleware Error:", error.message);
 
     return res.json({
       ok: false,
