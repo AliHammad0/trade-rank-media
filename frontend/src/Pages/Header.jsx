@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import logo from "../assets/medialogo.jpeg";
 
@@ -105,6 +104,29 @@ export default function Header() {
           transition: background 180ms ease, color 180ms ease;
         }
 
+        .trm-logo {
+          display: block;
+          width: auto;
+          height: 64px;
+          max-width: 240px;
+          object-fit: contain;
+          object-position: left center;
+        }
+
+        @media (min-width: 640px) {
+          .trm-logo {
+            height: 72px;
+            max-width: 280px;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .trm-logo {
+            height: 80px;
+            max-width: 300px;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .trm-nav-link,
           .trm-cta,
@@ -121,18 +143,18 @@ export default function Header() {
       <header className="trm-header sticky top-0 z-50 w-full border-b border-gray-200 bg-white font-[Arial,Helvetica,sans-serif] text-black shadow-sm">
         <div className="h-[3px] w-full bg-black" />
 
-        <div className="mx-auto flex min-h-[72px] w-full max-w-[1440px] items-center justify-between gap-3 px-4 sm:px-6 lg:min-h-[84px] lg:gap-5 lg:px-10 xl:px-14">
+        <div className="mx-auto flex min-h-[84px] w-full max-w-[1440px] items-center justify-between gap-3 px-4 sm:min-h-[92px] sm:px-6 lg:min-h-[104px] lg:gap-5 lg:px-10 xl:px-14">
           {/* Logo */}
           <a
             href="/"
             aria-label="Trade Rank Media home"
             onClick={closeMenu}
-            className="flex min-w-0 shrink-0 items-center"
+            className="flex shrink-0 items-center"
           >
             <img
               src={logo}
               alt="Trade Rank Media"
-              className="h-12 w-auto max-w-[190px] object-contain sm:h-14 sm:max-w-[220px]"
+              className="trm-logo"
             />
           </a>
 
@@ -154,7 +176,9 @@ export default function Header() {
                     aria-expanded={servicesOpen}
                     onClick={() => setServicesOpen((prev) => !prev)}
                     onKeyDown={(event) => {
-                      if (event.key === "Escape") setServicesOpen(false);
+                      if (event.key === "Escape") {
+                        setServicesOpen(false);
+                      }
                     }}
                     className="trm-nav-link flex items-center gap-2 rounded-lg px-3 py-3 text-[11px] font-bold tracking-wide text-black xl:px-3.5 xl:text-xs"
                   >
