@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import logo from "../assets/medialogo.jpeg";
 
 const navLinks = [
   { name: "HOME", href: "/" },
@@ -125,16 +127,13 @@ export default function Header() {
             href="/"
             aria-label="Trade Rank Media home"
             onClick={closeMenu}
-            className="flex min-w-0 shrink-0 flex-col"
+            className="flex min-w-0 shrink-0 items-center"
           >
-            <span className="whitespace-nowrap text-[16px] font-extrabold leading-tight tracking-tight text-black sm:text-[21px]">
-              TRADE RANK <span className="text-neutral-500">MEDIA</span>
-            </span>
-
-            <span className="mt-1.5 flex items-center gap-2 whitespace-nowrap text-[7px] font-semibold uppercase tracking-[1.4px] text-black sm:text-[9px] sm:tracking-[2px]">
-              <span className="h-[2px] w-4 rounded-full bg-black" />
-              Search. Visibility. Growth.
-            </span>
+            <img
+              src={logo}
+              alt="Trade Rank Media"
+              className="h-12 w-auto max-w-[190px] object-contain sm:h-14 sm:max-w-[220px]"
+            />
           </a>
 
           {/* Desktop Navigation */}
@@ -334,10 +333,6 @@ export default function Header() {
                 Discuss Your Project
               </a>
             </div>
-
-            <p className="pt-5 text-center text-[9px] font-semibold uppercase tracking-[1.8px] text-neutral-600">
-              Search. Visibility. Growth.
-            </p>
           </nav>
         </div>
       </header>
