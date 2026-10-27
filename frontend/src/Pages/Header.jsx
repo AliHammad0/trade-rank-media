@@ -104,27 +104,27 @@ export default function Header() {
           transition: background 180ms ease, color 180ms ease;
         }
 
-        /* Logo Size Increased 3x */
+        /* Perfect Balanced Logo Size */
         .trm-logo {
           display: block;
           width: auto;
-          height: 330px;
-          max-width: 960px;
+          height: 52px;
+          max-width: 180px;
           object-fit: contain;
           object-position: left center;
         }
 
         @media (min-width: 640px) {
           .trm-logo {
-            height: 390px;
-            max-width: 1140px;
+            height: 64px;
+            max-width: 220px;
           }
         }
 
         @media (min-width: 1024px) {
           .trm-logo {
-            height: 450px;
-            max-width: 1320px;
+            height: 74px;
+            max-width: 260px;
           }
         }
 
@@ -144,13 +144,13 @@ export default function Header() {
       <header className="trm-header sticky top-0 z-50 w-full border-b border-gray-200 bg-white font-[Arial,Helvetica,sans-serif] text-black shadow-sm">
         <div className="h-[3px] w-full bg-black" />
 
-        <div className="mx-auto flex min-h-[350px] w-full max-w-[1440px] items-center justify-between gap-3 px-4 sm:min-h-[420px] sm:px-6 lg:min-h-[480px] lg:gap-5 lg:px-10 xl:px-14">
+        <div className="mx-auto flex min-h-[76px] w-full max-w-[1440px] items-center justify-between gap-3 px-4 sm:min-h-[86px] sm:px-6 lg:min-h-[96px] lg:gap-5 lg:px-10 xl:px-14">
           {/* Logo */}
           <a
             href="/"
             aria-label="Trade Rank Media home"
             onClick={closeMenu}
-            className="flex shrink-0 items-center py-2"
+            className="flex shrink-0 items-center py-1"
           >
             <img
               src={logo}
