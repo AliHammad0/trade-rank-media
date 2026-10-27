@@ -104,27 +104,27 @@ export default function Header() {
           transition: background 180ms ease, color 180ms ease;
         }
 
-        /* Logo Size Updated */
+        /* Logo Size Increased 3x */
         .trm-logo {
           display: block;
           width: auto;
-          height: 110px;
-          max-width: 320px;
+          height: 330px;
+          max-width: 960px;
           object-fit: contain;
           object-position: left center;
         }
 
         @media (min-width: 640px) {
           .trm-logo {
-            height: 130px;
-            max-width: 380px;
+            height: 390px;
+            max-width: 1140px;
           }
         }
 
         @media (min-width: 1024px) {
           .trm-logo {
-            height: 150px;
-            max-width: 440px;
+            height: 450px;
+            max-width: 1320px;
           }
         }
 
@@ -144,7 +144,7 @@ export default function Header() {
       <header className="trm-header sticky top-0 z-50 w-full border-b border-gray-200 bg-white font-[Arial,Helvetica,sans-serif] text-black shadow-sm">
         <div className="h-[3px] w-full bg-black" />
 
-        <div className="mx-auto flex min-h-[96px] w-full max-w-[1440px] items-center justify-between gap-3 px-4 sm:min-h-[110px] sm:px-6 lg:min-h-[130px] lg:gap-5 lg:px-10 xl:px-14">
+        <div className="mx-auto flex min-h-[350px] w-full max-w-[1440px] items-center justify-between gap-3 px-4 sm:min-h-[420px] sm:px-6 lg:min-h-[480px] lg:gap-5 lg:px-10 xl:px-14">
           {/* Logo */}
           <a
             href="/"
