@@ -104,27 +104,27 @@ export default function Header() {
           transition: background 180ms ease, color 180ms ease;
         }
 
-        /* Perfect Balanced Logo Size */
+        /* Increased Logo Size */
         .trm-logo {
           display: block;
           width: auto;
-          height: 52px;
-          max-width: 180px;
+          height: 65px;
+          max-width: 240px;
           object-fit: contain;
           object-position: left center;
         }
 
         @media (min-width: 640px) {
           .trm-logo {
-            height: 64px;
-            max-width: 220px;
+            height: 80px;
+            max-width: 300px;
           }
         }
 
         @media (min-width: 1024px) {
           .trm-logo {
-            height: 74px;
-            max-width: 260px;
+            height: 95px;
+            max-width: 360px;
           }
         }
 
