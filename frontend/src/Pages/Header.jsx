@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../assets/medialogo.jpeg";
+import logo from "../assets/farazchange.jpeg";
 
 const navLinks = [
   { name: "HOME", href: "/" },
