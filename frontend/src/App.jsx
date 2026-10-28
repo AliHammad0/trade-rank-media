@@ -9,7 +9,7 @@ import Contact from "./Pages/ContactUs";
 import Services from "./Pages/Services";
 import Hero from "./Pages/Hero";
 import HowWeWork from "./Pages/HowWeWork";
-import Team from "./Pages/Team";
+
 
 const Home = () => {
   return (
@@ -34,7 +34,7 @@ const App = () => {
           <Route path="/how-we-work" element={<HowWeWork />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/team" element={<Team />} />
+          
         </Routes>
 
         <Footer />
