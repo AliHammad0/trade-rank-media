@@ -1,38 +1,35 @@
 
 import React from "react";
+import image from "../assets/com.jpeg";
 
 const services = [
   {
     number: "01",
     title: "Web Development",
     description:
-      "Responsive, user-focused websites built around your business goals, brand identity, and technical requirements.",
+      "Responsive, professional websites designed around your business goals, brand identity, and technical requirements.",
     href: "/services/web-development",
-    icon: "code",
   },
   {
     number: "02",
     title: "Guest Posting",
     description:
-      "Publisher opportunities for relevant content campaigns, based on your target niche and campaign requirements.",
+      "Relevant publisher opportunities based on your target niche, campaign requirements, and preferred countries.",
     href: "/services/guest-post",
-    icon: "document",
   },
   {
     number: "03",
     title: "Link Building",
     description:
-      "Requirement-based publisher research and link placement coordination for agencies, freelancers, and businesses.",
+      "Publisher research and placement coordination for agencies, freelancers, and businesses.",
     href: "/services/link-building",
-    icon: "link",
   },
   {
     number: "04",
     title: "Link Insertion",
     description:
-      "Opportunities for relevant links within existing content, subject to publisher availability and guidelines.",
+      "Relevant existing-content placement opportunities, subject to publisher availability and guidelines.",
     href: "/services/link-building",
-    icon: "search",
   },
 ];
 
@@ -41,183 +38,133 @@ const focusAreas = [
     number: "01",
     title: "Industry-Specific Campaigns",
     description:
-      "We work with specialized requirements across crypto, forex, trading, finance, technology, and other business niches.",
+      "We work with requirements across crypto, forex, trading, finance, technology, and other business niches.",
   },
   {
     number: "02",
-    title: "Publisher Relationships",
+    title: "Publisher Research",
     description:
-      "We source and evaluate publisher opportunities according to niche relevance, target geography, available SEO metrics, and campaign requirements.",
+      "We evaluate opportunities according to niche relevance, target geography, available SEO metrics, and campaign requirements.",
   },
   {
     number: "03",
-    title: "Agency-Friendly Collaboration",
+    title: "Agency Collaboration",
     description:
-      "We support SEO agencies and independent professionals with flexible placement coordination for individual and ongoing campaigns.",
+      "We support SEO agencies, freelancers, and businesses with placement coordination for individual and ongoing campaigns.",
   },
-];
-
-const audiences = [
-  "SEO agencies managing multiple client campaigns",
-  "Freelancers seeking publishing support",
-  "Businesses looking for relevant placements",
-  "Marketing teams with specific niche or country requirements",
 ];
 
 const team = [
   {
+    initials: "HS",
     name: "Hammad Shah",
     role: "Developer",
     description:
-      "Supports website development, responsive experiences, and technical implementation.",
-    initials: "HS",
+      "Website development, responsive user experiences, and technical implementation.",
   },
   {
+    initials: "FA",
     name: "Faraz Ahmed",
     role: "Outreach & Link Building",
     description:
-      "Supports publisher outreach, opportunity research, and link placement coordination.",
-    initials: "FA",
+      "Publisher outreach, opportunity research, and link placement coordination.",
   },
   {
+    initials: "MH",
     name: "Muhammad Huzaifa",
     role: "Founder & Link Builder",
     description:
-      "Oversees client requirements, link-building activities, and campaign coordination.",
-    initials: "MH",
+      "Client requirements, link-building activities, and campaign coordination.",
   },
 ];
 
-function Icon({ name, size = 24 }) {
-  const common = {
-    width: size,
-    height: size,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.7,
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    "aria-hidden": true,
-  };
-
-  const icons = {
-    code: (
-      <>
-        <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14" />
-      </>
-    ),
-    document: (
-      <>
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <path d="M14 2v6h6M8 13h8M8 17h8" />
-      </>
-    ),
-    link: (
-      <>
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-      </>
-    ),
-    search: (
-      <>
-        <circle cx="11" cy="11" r="7" />
-        <path d="m20 20-4-4" />
-      </>
-    ),
-    target: (
-      <>
-        <circle cx="12" cy="12" r="9" />
-        <circle cx="12" cy="12" r="5" />
-        <circle cx="12" cy="12" r="1" />
-      </>
-    ),
-    users: (
-      <>
-        <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-        <circle cx="10" cy="7" r="4" />
-        <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-      </>
-    ),
-    check: <path d="m5 12 4 4L19 6" />,
-  };
-
-  return <svg {...common}>{icons[name] || null}</svg>;
-}
+const audiences = [
+  "SEO agencies managing client campaigns",
+  "Freelancers seeking publishing opportunities",
+  "Businesses looking for relevant placements",
+  "Marketing teams with specific niche or country requirements",
+];
 
 function SectionLabel({ children }) {
   return (
-    <span className="mb-4 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2.5px] text-neutral-600 sm:text-xs">
-      <span className="h-0.5 w-5 rounded-full bg-black" />
+    <p className="mb-4 text-[11px] font-bold uppercase tracking-[2.5px] text-neutral-500 sm:text-xs">
       {children}
-    </span>
+    </p>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m5 12 4 4L19 6" />
+    </svg>
   );
 }
 
 export default function About() {
   return (
     <main
-      className="overflow-hidden bg-white font-[Arial,sans-serif] text-black"
+      className="overflow-hidden bg-white text-black"
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
     >
       <style>{`
         .about-hero {
-          background:
-            radial-gradient(ellipse at 85% 40%, rgba(0,0,0,.045), transparent 38%),
-            linear-gradient(135deg, #ffffff 0%, #ffffff 62%, #fafafa 100%);
+          background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
         }
 
-        .about-grid {
-          background-image: radial-gradient(rgba(0,0,0,.09) .8px, transparent .8px);
-          background-size: 22px 22px;
-          mask-image: linear-gradient(to right, transparent, black);
+        .about-image {
+          transition: transform .6s ease;
+        }
+
+        .about-image-wrap:hover .about-image {
+          transform: scale(1.035);
         }
 
         .about-card {
-          transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+          transition: border-color .2s ease, box-shadow .2s ease,
+            transform .2s ease;
         }
 
         @media (hover: hover) {
           .about-card:hover {
             transform: translateY(-4px);
             border-color: #a3a3a3;
-            box-shadow: 0 18px 36px -24px rgba(0,0,0,.2);
+            box-shadow: 0 16px 35px -24px rgba(0, 0, 0, .25);
           }
         }
 
-        .about-cta {
-          transition: background .2s ease, transform .2s ease;
-        }
-
-        .about-cta:hover {
-          transform: translateY(-2px);
+        .about-button {
+          transition: background .2s ease, color .2s ease;
         }
 
         @media (prefers-reduced-motion: reduce) {
+          .about-image,
           .about-card,
-          .about-cta {
+          .about-button {
             transition: none !important;
-          }
-
-          .about-cta:hover {
-            transform: none;
           }
         }
       `}</style>
 
-      {/* HERO */}
-      <section className="about-hero relative isolate overflow-hidden border-b border-neutral-200">
-        <div className="about-grid pointer-events-none absolute inset-0 opacity-40" />
-
-        <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-neutral-100/70 blur-3xl" />
-
-        <div className="relative mx-auto grid max-w-[1280px] items-center gap-12 px-4 py-16 min-[375px]:px-5 sm:px-8 sm:py-20 lg:grid-cols-2 lg:gap-12 lg:px-12 lg:py-24 xl:px-16">
-          <div className="relative z-10">
-            <span className="inline-flex rounded-full border border-neutral-200 bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[2px] text-black sm:text-xs">
+      {/* HERO WITH IMAGE */}
+      <section className="about-hero border-b border-neutral-200">
+        <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-4 py-14 min-[375px]:px-5 sm:px-8 sm:py-20 lg:grid-cols-2 lg:gap-14 lg:px-12 lg:py-24 xl:px-16">
+          <div>
+            <span className="inline-flex rounded-full border border-neutral-200 bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[2px] sm:text-xs">
               About Trade Rank Media
             </span>
 
-            <h1 className="mt-6 max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight min-[375px]:text-5xl sm:text-6xl lg:text-[58px] xl:text-[66px]">
+            <h1 className="mt-6 text-4xl font-extrabold leading-[1.12] tracking-tight min-[375px]:text-5xl sm:text-6xl lg:text-[58px] xl:text-[66px]">
               Built Around
               <span className="mt-1 block text-neutral-500">
                 Better Digital Growth.
@@ -225,118 +172,74 @@ export default function About() {
             </h1>
 
             <p className="mt-6 max-w-xl text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
-              Trade Rank Media helps businesses establish a stronger digital
-              presence through web development, guest posting, niche edits,
-              and publisher-based link placements tailored to campaign
-              requirements.
+              Trade Rank Media helps businesses strengthen their digital
+              presence through web development, guest posting, link building,
+              and publisher-based placements tailored to campaign requirements.
             </p>
 
             <p className="mt-4 max-w-xl text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
-              We work with SEO agencies, freelancers, and businesses that value
-              relevant opportunities, transparent communication, and dependable
-              coordination.
+              We work with SEO agencies, freelancers, and businesses that
+              value relevant opportunities, clear communication, and
+              professional coordination.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 min-[420px]:flex-row">
               <a
                 href="/contact"
-                className="about-cta inline-flex min-h-12 items-center justify-center rounded-lg bg-black px-6 py-3 text-center text-sm font-bold text-white hover:bg-neutral-800"
+                className="about-button inline-flex min-h-12 items-center justify-center rounded-lg bg-black px-7 py-3 text-center text-sm font-bold text-white hover:bg-neutral-800"
               >
                 Get in Touch
               </a>
 
               <a
                 href="/services"
-                className="inline-flex min-h-12 items-center justify-center rounded-lg border border-neutral-300 bg-white px-6 py-3 text-center text-sm font-bold text-black hover:bg-neutral-50"
+                className="inline-flex min-h-12 items-center justify-center rounded-lg border border-neutral-300 bg-white px-7 py-3 text-center text-sm font-bold text-black hover:bg-neutral-50"
               >
                 Explore Services
               </a>
             </div>
 
             <div className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-xs text-neutral-600 sm:text-sm">
-              {["Requirement-led", "Clear communication", "Flexible collaboration"].map(
-                (item) => (
-                  <span key={item} className="flex items-center gap-2">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neutral-100 text-black">
-                      <Icon name="check" size={12} />
-                    </span>
-                    {item}
+              {[
+                "Clear communication",
+                "Flexible collaboration",
+                "Requirement-led",
+              ].map((item) => (
+                <span key={item} className="flex items-center gap-2">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neutral-100 text-black">
+                    <CheckIcon />
                   </span>
-                )
-              )}
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
 
-          {/* DIGITAL SERVICES PANEL */}
-          <div className="relative mx-auto w-full max-w-[540px]">
-            <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-[0_24px_70px_rgba(0,0,0,0.07)] sm:rounded-3xl sm:p-6">
-              <div className="flex items-start justify-between gap-4 border-b border-neutral-100 pb-5">
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[2px] text-neutral-500">
-                    Trade Rank Media
-                  </p>
-                  <h2 className="mt-2 text-xl font-extrabold sm:text-2xl">
-                    Our Areas of Focus
-                  </h2>
-                </div>
+          {/* Existing com.jpeg image */}
+          <div className="about-image-wrap relative mx-auto w-full max-w-[580px]">
+            <div className="absolute -inset-3 rounded-3xl bg-neutral-100 sm:-inset-4" />
 
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-neutral-100 text-black">
-                  <Icon name="target" size={24} />
-                </span>
-              </div>
+            <div className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 shadow-xl sm:rounded-3xl">
+              <img
+                src={image}
+                alt="Trade Rank Media digital services and business growth"
+                className="about-image block h-[280px] w-full object-cover min-[375px]:h-[320px] sm:h-[400px] lg:h-[470px]"
+                loading="eager"
+                fetchPriority="high"
+              />
 
-              <div className="mt-5 space-y-3">
-                {[
-                  {
-                    title: "Web Development",
-                    text: "Business-focused digital experiences",
-                    icon: "code",
-                  },
-                  {
-                    title: "Guest Posting",
-                    text: "Relevant publisher opportunities",
-                    icon: "document",
-                  },
-                  {
-                    title: "Link Building",
-                    text: "Campaign-based placement coordination",
-                    icon: "link",
-                  },
-                  {
-                    title: "Niche Research",
-                    text: "Opportunities based on your requirements",
-                    icon: "search",
-                  },
-                ].map((item, index) => (
-                  <div
-                    key={item.title}
-                    className="flex items-center gap-3 rounded-xl border border-neutral-200 bg-white p-3 sm:gap-4 sm:p-4"
-                  >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-neutral-50 text-black sm:h-11 sm:w-11">
-                      <Icon name={item.icon} size={21} />
-                    </span>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent p-5 pt-16 text-white sm:p-7 sm:pt-20">
+                <p className="text-[10px] font-bold uppercase tracking-[2.5px] text-white/75 sm:text-xs">
+                  Trade Rank Media
+                </p>
 
-                    <div className="min-w-0">
-                      <p className="text-sm font-bold sm:text-base">
-                        {item.title}
-                      </p>
-                      <p className="mt-1 text-xs leading-5 text-neutral-500 sm:text-sm">
-                        {item.text}
-                      </p>
-                    </div>
+                <h2 className="mt-2 max-w-md text-2xl font-bold leading-tight sm:text-3xl">
+                  Digital Services. Real Business Priorities.
+                </h2>
 
-                    <span className="ml-auto shrink-0 text-xs font-bold text-neutral-400">
-                      0{index + 1}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 rounded-xl bg-neutral-50 p-4 sm:p-5">
-                <p className="text-sm font-bold">A practical, clear approach</p>
-                <p className="mt-1 text-xs leading-6 text-neutral-600 sm:text-sm">
-                  Understand the campaign. Evaluate opportunities. Coordinate
-                  the agreed work.
+                <p className="mt-2 max-w-md text-xs leading-6 text-white/85 sm:text-sm">
+                  Web development, publisher outreach, and link-building
+                  coordination.
                 </p>
               </div>
             </div>
@@ -345,8 +248,8 @@ export default function About() {
       </section>
 
       {/* WHO WE ARE */}
-      <section className="bg-white px-4 py-16 min-[375px]:px-5 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
-        <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
+      <section className="px-4 py-16 min-[375px]:px-5 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+        <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
             <SectionLabel>Who We Are</SectionLabel>
 
@@ -355,47 +258,45 @@ export default function About() {
             </h2>
 
             <p className="mt-5 text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
-              Trade Rank Media is a link-building service provider focused on
-              helping SEO agencies, freelancers, and businesses access relevant
-              publishing opportunities across different industries.
+              Trade Rank Media supports businesses and SEO professionals
+              looking for web development services and relevant publisher
+              opportunities across different industries.
             </p>
 
             <p className="mt-4 text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
-              Our work centers on guest posting, niche edits, and other
-              publisher-based link placements. We understand that each
-              campaign has different requirements, from industry relevance
-              and target geography to traffic expectations and publisher
-              guidelines.
+              Our publishing work includes guest posting, link insertion,
+              and link-building coordination. We consider requirements such
+              as industry relevance, target geography, traffic expectations,
+              and publisher guidelines.
             </p>
 
             <p className="mt-4 text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
-              We also provide web development services, helping businesses
-              establish and improve the websites that support their online
-              presence.
+              We also help businesses establish and improve their websites
+              with responsive designs and business-focused development.
             </p>
           </div>
 
-          <div className="grid content-start gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid content-start gap-3 sm:grid-cols-2">
             {[
               {
                 title: "Relevant Opportunities",
                 description:
-                  "We consider your niche, campaign goals, and requirements before identifying suitable available options.",
+                  "We consider your niche and campaign goals when reviewing available placements.",
               },
               {
                 title: "Clear Communication",
                 description:
-                  "We explain available options and quoted prices so you can review and approve placements before proceeding.",
+                  "We share available options and quoted prices for review before proceeding.",
               },
               {
                 title: "Flexible Collaboration",
                 description:
-                  "We can work with your own target-site list or help identify publishers that fit your campaign.",
+                  "You can provide your own target-site list or request suitable available options.",
               },
               {
                 title: "Realistic Expectations",
                 description:
-                  "Our recommendations depend on actual publisher availability, requirements, and publishing guidelines.",
+                  "Placements depend on publisher availability and individual publishing guidelines.",
               },
             ].map((item, index) => (
               <article
@@ -427,8 +328,7 @@ export default function About() {
 
             <p className="mt-4 text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
               From building your website to coordinating publishing
-              opportunities, our services are shaped around your goals and
-              requirements.
+              opportunities, our services are shaped around your goals.
             </p>
           </div>
 
@@ -439,15 +339,9 @@ export default function About() {
                 href={service.href}
                 className="about-card flex min-h-[220px] flex-col rounded-2xl border border-neutral-200 bg-white p-5 sm:p-6"
               >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-50 text-black">
-                    <Icon name={service.icon} size={23} />
-                  </span>
-
-                  <span className="text-xs font-bold tracking-[2px] text-neutral-400">
-                    {service.number}
-                  </span>
-                </div>
+                <span className="text-xs font-bold tracking-[2px] text-neutral-400">
+                  {service.number}
+                </span>
 
                 <h3 className="mt-5 text-lg font-extrabold">
                   {service.title}
@@ -466,27 +360,25 @@ export default function About() {
         </div>
       </section>
 
-      {/* AREAS OF FOCUS */}
-      <section className="bg-white px-4 py-16 min-[375px]:px-5 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+      {/* CAMPAIGN FOCUS */}
+      <section className="px-4 py-16 min-[375px]:px-5 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-[1200px]">
-          <div className="max-w-2xl">
-            <SectionLabel>Our Areas of Focus</SectionLabel>
+          <SectionLabel>Our Areas of Focus</SectionLabel>
 
-            <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-              Built Around Your Campaign Requirements.
-            </h2>
+          <h2 className="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+            Built Around Your Campaign Requirements.
+          </h2>
 
-            <p className="mt-4 text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
-              We take your campaign criteria into account when evaluating
-              opportunities and coordinating placements.
-            </p>
-          </div>
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
+            We take your campaign criteria into account when evaluating
+            opportunities and coordinating placements.
+          </p>
 
           <div className="mt-9 grid gap-4 md:grid-cols-3">
             {focusAreas.map((item) => (
               <article
                 key={item.number}
-                className="rounded-2xl border border-neutral-200 p-5 sm:p-7"
+                className="about-card rounded-2xl border border-neutral-200 p-5 sm:p-7"
               >
                 <p className="text-xs font-bold tracking-[2px] text-neutral-400">
                   {item.number}
@@ -516,9 +408,9 @@ export default function About() {
             </h2>
 
             <p className="mt-5 text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
-              Whether you manage client campaigns or work on your own
-              website, we aim to understand your requirements and coordinate
-              opportunities that suit your needs.
+              Whether you manage client campaigns or need support for your
+              own website, we aim to understand your requirements and
+              coordinate suitable next steps.
             </p>
           </div>
 
@@ -528,8 +420,8 @@ export default function About() {
                 key={audience}
                 className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white p-4 sm:p-5"
               >
-                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-black">
-                  <Icon name="check" size={14} />
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-neutral-100">
+                  <CheckIcon />
                 </span>
 
                 <p className="text-sm font-semibold leading-6 text-neutral-800 sm:text-base">
@@ -541,53 +433,27 @@ export default function About() {
         </div>
       </section>
 
-      {/* OUR COMMITMENT */}
-      <section className="bg-white px-4 py-16 min-[375px]:px-5 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
-        <div className="mx-auto max-w-[1000px] rounded-2xl border border-neutral-200 bg-white p-6 sm:p-9 lg:p-12">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-100 text-black">
-            <Icon name="target" size={25} />
-          </span>
+      {/* TEAM */}
+      <section className="px-4 py-16 min-[375px]:px-5 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+        <div className="mx-auto max-w-[1200px]">
+          <SectionLabel>Meet the Team</SectionLabel>
 
-          <SectionLabel>Our Commitment</SectionLabel>
-
-          <h2 className="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
-            Clear Communication. Careful Evaluation. Professional Coordination.
+          <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+            The People Behind the Work.
           </h2>
 
-          <p className="mt-5 max-w-3xl text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
-            We aim to assess requirements carefully, communicate available
-            options clearly, and coordinate work according to agreed
-            expectations. Placement recommendations depend on publisher
-            availability, campaign criteria, and individual publishing
-            guidelines. Our goal is to build lasting professional
-            relationships through consistent and transparent collaboration.
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
+            A team combining web development, publisher outreach, and
+            link-building coordination.
           </p>
-        </div>
-      </section>
 
-      {/* MEET THE TEAM */}
-      <section className="border-y border-neutral-200 bg-neutral-50 px-4 py-16 min-[375px]:px-5 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="mb-9 max-w-2xl sm:mb-12">
-            <SectionLabel>Meet the Team</SectionLabel>
-
-            <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-              The People Behind the Work.
-            </h2>
-
-            <p className="mt-4 text-sm leading-7 text-neutral-600 sm:text-base sm:leading-8">
-              A team combining web development, publisher outreach, and
-              link-building coordination.
-            </p>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="mt-9 grid gap-4 md:grid-cols-3">
             {team.map((member) => (
               <article
                 key={member.name}
-                className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7"
+                className="about-card rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-neutral-100 text-lg font-extrabold text-black">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-neutral-100 text-lg font-extrabold">
                   {member.initials}
                 </div>
 
@@ -609,7 +475,7 @@ export default function About() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="bg-white px-4 py-16 text-center min-[375px]:px-5 sm:px-8 sm:py-20 lg:py-24">
+      <section className="border-t border-neutral-200 bg-neutral-50 px-4 py-16 text-center min-[375px]:px-5 sm:px-8 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-3xl">
           <SectionLabel>Let's Work Together</SectionLabel>
 
@@ -626,14 +492,14 @@ export default function About() {
           <div className="mt-8 flex flex-col justify-center gap-3 min-[420px]:flex-row">
             <a
               href="/contact"
-              className="about-cta inline-flex min-h-12 items-center justify-center rounded-lg bg-black px-7 py-3 text-center text-sm font-bold text-white hover:bg-neutral-800"
+              className="about-button inline-flex min-h-12 items-center justify-center rounded-lg bg-black px-7 py-3 text-center text-sm font-bold text-white hover:bg-neutral-800"
             >
               Contact Our Team
             </a>
 
             <a
               href="/services"
-              className="inline-flex min-h-12 items-center justify-center rounded-lg border border-neutral-300 bg-white px-7 py-3 text-center text-sm font-bold text-black hover:bg-neutral-50"
+              className="inline-flex min-h-12 items-center justify-center rounded-lg border border-neutral-300 bg-white px-7 py-3 text-center text-sm font-bold text-black hover:bg-white"
             >
               View Services
             </a>
