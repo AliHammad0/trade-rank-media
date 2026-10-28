@@ -1,20 +1,9 @@
-
 import { useState } from "react";
 import logo from "../assets/farazchange.jpeg";
 
 const navLinks = [
   { name: "HOME", href: "/" },
-  {
-    name: "SERVICES",
-    href: "/services",
-    dropdown: [
-      { name: "Web Development", href: "/services/web-development" },
-      { name: "Guest Posting", href: "/services/guest-post" },
-      { name: "Link Building", href: "/services/link-building" },
-      { name: "Facebook Ads", href: "/services/facebook-ads" },
-      { name: "Trading Backlinks", href: "/services/trading-backlinks" },
-    ],
-  },
+  { name: "SERVICES", href: "/services" },
   { name: "ABOUT", href: "/about" },
   { name: "HOW WE WORK", href: "/how-we-work" },
   { name: "TEAM", href: "/team" },
@@ -42,36 +31,11 @@ function MenuIcon({ open }) {
   );
 }
 
-function ChevronIcon({ open = false }) {
-  return (
-    <svg
-      width="13"
-      height="13"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={`shrink-0 transition-transform duration-200 ${
-        open ? "rotate-180" : ""
-      }`}
-      aria-hidden="true"
-    >
-      <path d="m6 9 6 6 6-6" />
-    </svg>
-  );
-}
-
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   const closeMenu = () => {
     setMenuOpen(false);
-    setServicesOpen(false);
-    setMobileServicesOpen(false);
   };
 
   return (
@@ -87,8 +51,7 @@ export default function Header() {
           transition: color 200ms ease, background 200ms ease;
         }
 
-        .trm-nav-link:hover,
-        .trm-dropdown-item:hover {
+        .trm-nav-link:hover {
           color: #111111;
           background: #f5f5f5;
         }
@@ -100,10 +63,6 @@ export default function Header() {
         .trm-cta:hover {
           transform: translateY(-2px);
           box-shadow: 0 9px 22px -10px rgba(0, 0, 0, .3);
-        }
-
-        .trm-dropdown-item {
-          transition: background 180ms ease, color 180ms ease;
         }
 
         .trm-logo {
@@ -165,8 +124,7 @@ export default function Header() {
 
         @media (prefers-reduced-motion: reduce) {
           .trm-nav-link,
-          .trm-cta,
-          .trm-dropdown-item {
+          .trm-cta {
             transition: none !important;
           }
 
@@ -194,76 +152,21 @@ export default function Header() {
             />
           </a>
 
-          {/* Desktop Navigation: enabled on wide screens */}
+          {/* Desktop Navigation */}
           <nav
             aria-label="Main navigation"
             className="hidden min-w-0 items-center gap-0 xl:flex"
           >
-            {navLinks.map((link) =>
-              link.dropdown ? (
-                <div
-                  key={link.name}
-                  className="relative"
-                  onMouseEnter={() => setServicesOpen(true)}
-                  onMouseLeave={() => setServicesOpen(false)}
-                >
-                  <button
-                    type="button"
-                    aria-expanded={servicesOpen}
-                    onClick={() => setServicesOpen((prev) => !prev)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Escape") {
-                        setServicesOpen(false);
-                      }
-                    }}
-                    className="trm-nav-link flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2.5 py-3 text-[11px] font-bold tracking-wide text-black 2xl:px-3 2xl:text-xs"
-                  >
-                    {link.name}
-                    <ChevronIcon open={servicesOpen} />
-                  </button>
-
-                  {servicesOpen && (
-                    <div className="absolute left-0 top-full z-50 w-64 pt-2">
-                      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white p-2 shadow-xl">
-                        <p className="px-3 pb-2 pt-2 text-[10px] font-bold uppercase tracking-[2px] text-gray-500">
-                          Our Services
-                        </p>
-
-                        {link.dropdown.map((item) => (
-                          <a
-                            key={item.name}
-                            href={item.href}
-                            onClick={closeMenu}
-                            className="trm-dropdown-item block rounded-lg px-3 py-3 text-sm font-medium text-black"
-                          >
-                            {item.name}
-                          </a>
-                        ))}
-
-                        <div className="mt-1 border-t border-gray-100 pt-2">
-                          <a
-                            href={link.href}
-                            onClick={closeMenu}
-                            className="block rounded-lg px-3 py-3 text-xs font-bold text-black hover:bg-neutral-50"
-                          >
-                            View All Services
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={closeMenu}
-                  className="trm-nav-link whitespace-nowrap rounded-lg px-2.5 py-3 text-[11px] font-bold tracking-wide text-black 2xl:px-3 2xl:text-xs"
-                >
-                  {link.name}
-                </a>
-              )
-            )}
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={closeMenu}
+                className="trm-nav-link whitespace-nowrap rounded-lg px-2.5 py-3 text-[11px] font-bold tracking-wide text-black 2xl:px-3 2xl:text-xs"
+              >
+                {link.name}
+              </a>
+            ))}
           </nav>
 
           {/* Desktop CTA */}
@@ -287,10 +190,7 @@ export default function Header() {
 
             <button
               type="button"
-              onClick={() => {
-                setMenuOpen((prev) => !prev);
-                setMobileServicesOpen(false);
-              }}
+              onClick={() => setMenuOpen((prev) => !prev)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
@@ -315,67 +215,21 @@ export default function Header() {
             aria-label="Mobile navigation"
             className="mx-auto flex w-full max-w-2xl flex-col px-3 pb-5 pt-2 min-[375px]:px-4 sm:px-6"
           >
-            {navLinks.map((link, index) =>
-              link.dropdown ? (
-                <div key={link.name} className="border-b border-gray-100">
-                  <div className="flex min-h-[48px] items-center">
-                    <a
-                      href={link.href}
-                      tabIndex={menuOpen ? 0 : -1}
-                      onClick={closeMenu}
-                      className="flex min-h-[48px] min-w-0 flex-1 items-center gap-3 px-2 py-3 text-[13px] font-semibold text-black sm:text-sm"
-                    >
-                      <span className="w-5 shrink-0 text-[10px] font-bold text-neutral-500">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      {link.name}
-                    </a>
+            {navLinks.map((link, index) => (
+              <a
+                key={link.name}
+                href={link.href}
+                tabIndex={menuOpen ? 0 : -1}
+                onClick={closeMenu}
+                className="flex min-h-[48px] items-center gap-3 border-b border-gray-100 px-2 text-[13px] font-semibold text-black sm:text-sm"
+              >
+                <span className="w-5 shrink-0 text-[10px] font-bold text-neutral-500">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
-                    <button
-                      type="button"
-                      tabIndex={menuOpen ? 0 : -1}
-                      onClick={() =>
-                        setMobileServicesOpen((prev) => !prev)
-                      }
-                      aria-label="Toggle services submenu"
-                      aria-expanded={mobileServicesOpen}
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-black hover:bg-gray-50"
-                    >
-                      <ChevronIcon open={mobileServicesOpen} />
-                    </button>
-                  </div>
-
-                  {mobileServicesOpen && (
-                    <div className="mb-3 ml-7 border-l-2 border-neutral-200 pl-3">
-                      {link.dropdown.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          tabIndex={menuOpen ? 0 : -1}
-                          onClick={closeMenu}
-                          className="block rounded-md px-3 py-3 text-sm font-medium text-black hover:bg-gray-50"
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  tabIndex={menuOpen ? 0 : -1}
-                  onClick={closeMenu}
-                  className="flex min-h-[48px] items-center gap-3 border-b border-gray-100 px-2 text-[13px] font-semibold text-black sm:text-sm"
-                >
-                  <span className="w-5 shrink-0 text-[10px] font-bold text-neutral-500">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  {link.name}
-                </a>
-              )
-            )}
+                {link.name}
+              </a>
+            ))}
 
             <div className="mt-4 rounded-xl border border-gray-200 bg-white p-3 min-[375px]:p-4">
               <p className="text-sm font-bold text-black sm:text-base">
@@ -402,6 +256,3 @@ export default function Header() {
     </>
   );
 }
-
-
-
