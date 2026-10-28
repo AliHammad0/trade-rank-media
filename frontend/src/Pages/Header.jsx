@@ -235,7 +235,7 @@ export default function Header() {
           <a
             href="/contact"
             onClick={closeMenu}
-            className="trm-cta hidden shrink-0 items-center justify-center rounded-lg bg-green-900 px-4 py-3.5 text-xs font-bold text-white lg:inline-flex xl:px-5"
+            className="trm-cta hidden shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-teal-400 to-emerald-600 px-4 py-3.5 text-xs font-bold text-black lg:inline-flex xl:px-5"
           >
             Request Quote
           </a>

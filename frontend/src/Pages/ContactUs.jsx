@@ -1,16 +1,43 @@
-import React, { useState } from "react";
 
-const services = [
-  "Web Development",
-  "Business Website",
-  "Landing Page",
-  "Frontend Development",
-  "Website Redesign",
-  "Guest Posting",
-  "Link Building",
-  "White-Label Support",
-  "Other",
+import React from "react";
+
+const teamMembers = [
+  {
+    name: " Ali Hammad",
+    role: "Developer",
+    phone: "923114237376",
+    displayPhone: "+92 311 4237376",
+    email: "traderankmedia@gmail.com",
+    service: "Web Development",
+    message:
+      "Hi Hammad, I'm interested in your web development services. I'd like to discuss my website requirements. Please share how we can get started.",
+    initials: "HS",
+  },
+  {
+    name: "Faraz Ahmed",
+    role: "Outreach & Link Building",
+    phone: "923136347962",
+    displayPhone: "+92 313 6347962",
+    email: "mugalfraz810@gmail.com",
+    service: "Guest Posting, Link Insertion & Link Building",
+    message:
+      "Hi Faraz, I'm interested in guest posting, link insertion, and link building services. I'd like to discuss my campaign requirements and available opportunities.",
+    initials: "FA",
+  },
+  {
+    name: "Muhammad Huzaifa",
+    role: "Founder & Link Builder",
+    phone: "923266023011",
+    displayPhone: "0326 6023011",
+    email: "traderakmedia@gmail.com",
+    service: "Client Inquiries, Custom Placements & Link Building",
+    message:
+      "Hi Muhammad Huzaifa, I'm contacting you regarding Trade Rank Media's link building services. I'd like to discuss client requirements and custom placement opportunities.",
+    initials: "MH",
+  },
 ];
+
+const companyEmail = "traderankmedia@gmail.com";
 
 const inputClass =
   "w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm text-black outline-none focus:border-black";
@@ -18,274 +45,178 @@ const inputClass =
 const labelClass = "mb-2 block text-sm font-bold text-black";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    service: "Web Development",
-    budget: "",
-    message: "",
-  });
-
-  const [error, setError] = useState("");
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormData((previous) => ({
-      ...previous,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setError("");
-
-    const { name, email, service, message } = formData;
-
-    if (
-      !name.trim() ||
-      !email.trim() ||
-      !service ||
-      !message.trim()
-    ) {
-      setError("Please fill in all required fields.");
-      return;
-    }
-
-    const subject = encodeURIComponent(`Project Inquiry: ${service}`);
-
-    const body = encodeURIComponent(
-      `Name: ${name}\n` +
-        `Email: ${email}\n` +
-        `Company: ${formData.company || "Not provided"}\n` +
-        `Service: ${service}\n` +
-        `Budget: ${formData.budget || "Not specified"}\n\n` +
-        `Message:\n${message}`
-    );
-
-    window.location.href =
-      `mailto:YOUR_EMAIL@example.com?subject=${subject}&body=${body}`;
-  };
-
   return (
     <main
       className="min-h-screen bg-white text-black"
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
     >
+      {/* Main Company Contact */}
       <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-          <div className="pt-2">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-600">
               Get In Touch
             </p>
 
-            <h1 className="mt-5 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+            <h1 className="mt-5 text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
               Tell Us About Your Project
             </h1>
 
-            <p className="mt-5 max-w-lg text-base leading-7 text-gray-600">
-              We work with businesses, startups, freelancers, and agencies
-              looking for practical digital solutions.
+            <p className="mt-5 text-base leading-7 text-gray-600">
+              Trade Rank Media helps businesses with professional web
+              development, guest posting, outreach, and link building.
+              Contact our team to discuss your requirements.
             </p>
-
-            <div className="mt-10 space-y-5">
-              <div className="border border-gray-200 p-6">
-                <div className="mb-5 flex h-11 w-11 items-center justify-center bg-gray-100 text-sm font-bold text-black">
-                  WD
-                </div>
-
-                <h2 className="text-lg font-bold">
-                  Web Development
-                </h2>
-
-                <p className="mt-3 text-sm leading-7 text-gray-600">
-                  Business websites, landing pages, responsive interfaces,
-                  and website redesigns built around your requirements.
-                </p>
-              </div>
-
-              <div className="border border-gray-200 p-6">
-                <div className="mb-5 flex h-11 w-11 items-center justify-center bg-gray-100 text-sm font-bold text-black">
-                  SEO
-                </div>
-
-                <h2 className="text-lg font-bold">
-                  Guest Posting & Link Building
-                </h2>
-
-                <p className="mt-3 text-sm leading-7 text-gray-600">
-                  Guest posting, niche edits, and outreach opportunities
-                  planned according to your campaign requirements.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 border-l-2 border-black pl-5">
-              <p className="text-sm font-bold">
-                Have a project in mind?
-              </p>
-
-              <p className="mt-2 text-sm leading-6 text-gray-600">
-                Share your requirements using the form. We can discuss
-                your goals, budget, and next steps.
-              </p>
-            </div>
           </div>
 
-          <div className="border border-gray-200 bg-white p-5 sm:p-8 lg:p-10">
-            <h2 className="text-2xl font-bold tracking-tight">
-              Send Us a Message
-            </h2>
-
-            <p className="mt-3 text-sm leading-6 text-gray-600">
-              Tell us a little about your project and the service you need.
-            </p>
-
-            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="name" className={labelClass}>
-                    Full Name *
-                  </label>
-
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    autoComplete="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your full name"
-                    className={inputClass}
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className={labelClass}>
-                    Email Address *
-                  </label>
-
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="you@example.com"
-                    className={inputClass}
-                  />
-                </div>
+          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="border border-gray-200 p-6 sm:p-8">
+              <div className="mb-5 flex h-12 w-12 items-center justify-center bg-gray-100 text-sm font-bold">
+                TR
               </div>
 
-              <div>
-                <label htmlFor="company" className={labelClass}>
-                  Company / Website
-                </label>
+              <h2 className="text-xl font-bold">Contact Trade Rank Media</h2>
 
-                <input
-                  id="company"
-                  name="company"
-                  type="text"
-                  value={formData.company}
-                  onChange={handleChange}
-                  placeholder="Company name or website URL"
-                  className={inputClass}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="service" className={labelClass}>
-                    Service Required *
-                  </label>
-
-                  <select
-                    id="service"
-                    name="service"
-                    required
-                    value={formData.service}
-                    onChange={handleChange}
-                    className={inputClass}
-                  >
-                    {services.map((service) => (
-                      <option key={service} value={service}>
-                        {service}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label htmlFor="budget" className={labelClass}>
-                    Estimated Budget
-                  </label>
-
-                  <select
-                    id="budget"
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleChange}
-                    className={inputClass}
-                  >
-                    <option value="">Select your budget</option>
-                    <option value="Under $100">Under $100</option>
-                    <option value="$100 - $300">$100 - $300</option>
-                    <option value="$300 - $500">$300 - $500</option>
-                    <option value="$500 - $1000">$500 - $1,000</option>
-                    <option value="$1000+">$1,000+</option>
-                    <option value="Let's discuss">Let's discuss</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="message" className={labelClass}>
-                  Project Details *
-                </label>
-
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={6}
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Describe your project, requirements, and goals..."
-                  className={`${inputClass} resize-y`}
-                />
-              </div>
-
-              {error && (
-                <p
-                  role="alert"
-                  className="text-sm font-bold text-red-600"
-                >
-                  {error}
-                </p>
-              )}
-
-              <button
-                type="submit"
-                className="w-full border border-black bg-black px-6 py-4 text-sm font-bold text-white hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
-              >
-                Prepare Inquiry
-              </button>
-
-              <p className="text-center text-xs leading-5 text-gray-500">
-                Your email application will open with the inquiry prepared.
-                The message will not be sent automatically.
+              <p className="mt-3 text-sm leading-7 text-gray-600">
+                For general questions, project inquiries, and information
+                about our digital services, contact us by email.
               </p>
-            </form>
+
+              <a
+                href={`mailto:${companyEmail}?subject=${encodeURIComponent(
+                  "Trade Rank Media - General Inquiry"
+                )}`}
+                className="mt-6 inline-flex max-w-full break-all border border-black bg-black px-5 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-black"
+              >
+                Email Our Company
+              </a>
+
+              <p className="mt-4 break-all text-sm text-gray-600">
+                {companyEmail}
+              </p>
+            </div>
+
+            <div className="border border-gray-200 bg-gray-50 p-6 sm:p-8">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-600">
+                Our Services
+              </p>
+
+              <h2 className="mt-3 text-xl font-bold">
+                Digital Solutions for Your Business
+              </h2>
+
+              <div className="mt-5 space-y-3 text-sm text-gray-700">
+                <p>Web Development & Website Redesign</p>
+                <p>Business Websites & Landing Pages</p>
+                <p>Guest Posting & Link Insertion</p>
+                <p>Link Building & Outreach</p>
+                <p>White-Label Support</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-gray-200 bg-gray-50 px-5 py-14 sm:px-8 lg:px-10">
+      {/* Individual Team Contacts */}
+      <section className="border-t border-gray-200 bg-gray-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-600">
+              Meet The Team
+            </p>
+
+            <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+              Contact Our Team
+            </h2>
+
+            <p className="mt-4 text-sm leading-7 text-gray-600 sm:text-base">
+              Reach the right team member for your project. Send a WhatsApp
+              message or contact them directly by email.
+            </p>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {teamMembers.map((member) => {
+              const whatsappLink = `https://wa.me/${member.phone}?text=${encodeURIComponent(
+                member.message
+              )}`;
+
+              const emailLink = `mailto:${member.email}?subject=${encodeURIComponent(
+                `Trade Rank Media Inquiry - ${member.service}`
+              )}`;
+
+              return (
+                <article
+                  key={member.name}
+                  className="flex h-full flex-col border border-gray-200 bg-white p-6 transition duration-300 hover:border-gray-400 sm:p-8"
+                >
+                  <div className="flex h-14 w-14 items-center justify-center bg-black text-lg font-bold text-white">
+                    {member.initials}
+                  </div>
+
+                  <h3 className="mt-6 text-xl font-bold">{member.name}</h3>
+
+                  <p className="mt-2 text-sm font-semibold text-gray-600">
+                    {member.role}
+                  </p>
+
+                  <div className="mt-6 flex-1 space-y-5">
+                    <div>
+                      <p className={labelClass}>Services</p>
+                      <p className="text-sm leading-6 text-gray-600">
+                        {member.service}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className={labelClass}>WhatsApp</p>
+                      <a
+                        href={whatsappLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="break-words text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-black"
+                      >
+                        {member.displayPhone}
+                      </a>
+                    </div>
+
+                    <div>
+                      <p className={labelClass}>Email</p>
+                      <a
+                        href={emailLink}
+                        className="break-all text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-black"
+                      >
+                        {member.email}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 space-y-3">
+                    <a
+                      href={whatsappLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex w-full items-center justify-center border border-black bg-black px-5 py-3.5 text-center text-sm font-bold text-white transition hover:bg-white hover:text-black"
+                    >
+                      Message on WhatsApp
+                    </a>
+
+                    <a
+                      href={emailLink}
+                      className="flex w-full items-center justify-center border border-gray-300 bg-white px-5 py-3.5 text-center text-sm font-bold text-black transition hover:border-black"
+                    >
+                      Send Email
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Closing Section */}
+      <section className="border-t border-gray-200 bg-white px-5 py-14 sm:px-8 lg:px-10">
         <div className="mx-auto max-w-7xl text-center">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-600">
             Let's Work Together
@@ -296,19 +227,18 @@ export default function Contact() {
           </h2>
 
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-gray-600 sm:text-base">
-            Let's discuss your website or digital campaign and identify
-            the right next steps for your business.
+            Contact our team to discuss your website, outreach campaign,
+            or link building requirements.
           </p>
 
-          <button
-            type="button"
-            onClick={() =>
-              window.scrollTo({ top: 0, behavior: "auto" })
-            }
-            className="mt-7 border border-black bg-black px-7 py-3 text-sm font-bold text-white hover:bg-white hover:text-black"
+          <a
+            href={`mailto:${companyEmail}?subject=${encodeURIComponent(
+              "Trade Rank Media - Project Inquiry"
+            )}`}
+            className="mt-7 inline-flex border border-black bg-black px-7 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-black"
           >
-            Back to Top
-          </button>
+            Contact Us
+          </a>
         </div>
       </section>
     </main>
