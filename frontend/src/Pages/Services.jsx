@@ -1,8 +1,6 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  FiGlobe,
   FiCode,
   FiServer,
   FiUsers,
@@ -16,24 +14,13 @@ import {
   FiCheckCircle,
   FiLayers,
   FiBriefcase,
-  FiFacebook,
   FiFileText,
-  FiSettings,
+  FiGlobe,
 } from "react-icons/fi";
 
 const services = [
   {
     number: "01",
-    title: "Web Development",
-    description:
-      "We build modern, responsive business websites designed around your brand, business goals, and customer needs.",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=85",
-    icon: FiGlobe,
-    tags: ["Business Websites", "React Development", "Landing Pages"],
-  },
-  {
-    number: "02",
     title: "Frontend Development",
     description:
       "We create polished user interfaces with responsive layouts, consistent styling, and smooth experiences across mobile and desktop.",
@@ -43,7 +30,7 @@ const services = [
     tags: ["React", "Responsive Design", "UI Development"],
   },
   {
-    number: "03",
+    number: "02",
     title: "Backend Development",
     description:
       "We develop the server-side functionality that powers websites, including APIs, database integration, and application logic.",
@@ -53,17 +40,17 @@ const services = [
     tags: ["API Development", "Database Integration", "Server Logic"],
   },
   {
-    number: "04",
+    number: "03",
     title: "Facebook Ads",
     description:
       "We help businesses plan and manage Facebook advertising campaigns around their target audience, campaign objectives, and budget.",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=85",
-    icon: FiFacebook,
+    icon: FiGlobe,
     tags: ["Campaign Setup", "Audience Targeting", "Ad Optimization"],
   },
   {
-    number: "05",
+    number: "04",
     title: "Guest Posting",
     description:
       "We coordinate guest article opportunities on relevant publisher websites to support off-page SEO campaigns and brand visibility.",
@@ -73,7 +60,7 @@ const services = [
     tags: ["Guest Articles", "Publisher Research", "Content Placement"],
   },
   {
-    number: "06",
+    number: "05",
     title: "Niche Edits & Link Insertion",
     description:
       "We coordinate contextual link placements within existing articles where the publisher permits them and the page fits your campaign.",
@@ -83,7 +70,7 @@ const services = [
     tags: ["Contextual Links", "Page Relevance", "Placement Coordination"],
   },
   {
-    number: "07",
+    number: "06",
     title: "Homepage & Banner Placements",
     description:
       "We check publisher availability for homepage links, banner placements, and other agreed positions based on campaign requirements.",
@@ -93,7 +80,7 @@ const services = [
     tags: ["Homepage Visibility", "Banner Placements", "Publisher Terms"],
   },
   {
-    number: "08",
+    number: "07",
     title: "Digital PR & News Publications",
     description:
       "We help coordinate relevant editorial and press release opportunities through suitable news and media publishers, subject to their policies.",
@@ -103,7 +90,7 @@ const services = [
     tags: ["Press Releases", "Editorial Coverage", "News Publications"],
   },
   {
-    number: "09",
+    number: "08",
     title: "Custom Publisher Research",
     description:
       "We research available publishers according to your target niche, countries, traffic requirements, and other campaign criteria.",
@@ -113,7 +100,7 @@ const services = [
     tags: ["Niche Research", "Target GEO", "Publisher Shortlists"],
   },
   {
-    number: "10",
+    number: "09",
     title: "Industry-Specific Link Building",
     description:
       "We explore placement opportunities across crypto, forex, trading, finance, technology, business, and other industries, subject to availability.",
@@ -196,7 +183,6 @@ const Services = () => {
       className="min-h-screen overflow-hidden bg-white text-black"
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
     >
-      {/* Page Hero */}
       <section className="border-b border-neutral-200 bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-pink-600">
@@ -209,9 +195,10 @@ const Services = () => {
             </h1>
 
             <p className="max-w-2xl text-base leading-8 text-neutral-600 sm:text-lg">
-              From web development and digital advertising to guest posts,
-              niche edits, and custom publisher research, we help businesses
-              build their online presence around their specific requirements.
+              From frontend and backend development to digital advertising,
+              guest posts, niche edits, and custom publisher research, we help
+              businesses build their online presence around their specific
+              requirements.
             </p>
           </div>
 
@@ -233,7 +220,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* All Services */}
       <section
         id="core-services"
         className="bg-neutral-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24"
@@ -243,9 +229,11 @@ const Services = () => {
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-600">
               What We Do
             </p>
+
             <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
               Our Core Services
             </h2>
+
             <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-600 sm:text-base">
               Practical digital services and flexible placement options for
               different business and campaign requirements.
@@ -268,6 +256,7 @@ const Services = () => {
                       loading="lazy"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
+
                     <div className="absolute inset-0 bg-black/10" />
 
                     <div className="absolute left-5 top-5 flex h-11 w-11 items-center justify-center bg-white text-pink-600">
@@ -313,7 +302,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Publisher Vetting */}
       <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
@@ -362,7 +350,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Domain Rating */}
       <section className="border-y border-neutral-200 bg-neutral-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div>
@@ -396,7 +383,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Editorial Visibility */}
       <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div className="overflow-hidden bg-neutral-100">
@@ -444,7 +430,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Who We Work With */}
       <section className="bg-neutral-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
@@ -487,7 +472,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Final CTA */}
       <section className="bg-black px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-3xl">
@@ -528,4 +512,3 @@ const Services = () => {
 };
 
 export default Services;
-//
