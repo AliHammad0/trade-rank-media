@@ -48,18 +48,18 @@ export default function Hero() {
         <div className="relative z-10 order-2 lg:order-1">
           <div className="mb-6 inline-flex items-center gap-3">
             <span className="h-[2px] w-9 bg-pink-500" />
-            <span className="text-xs font-bold uppercase tracking-[0.24em] text-neutral-600 sm:text-sm">
+            <span className="text-xs font-bold uppercase tracking-[0.24em] bg-gradient-to-r from-teal-400 to-emerald-600 sm:text-sm">
               Trade Rank Media
             </span>
           </div>
 
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-pink-600 sm:text-sm">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-black sm:text-sm">
             Link Building & Digital PR
           </p>
 
           <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl md:text-6xl xl:text-[68px]">
             Relevant Links.
-            <span className="block text-pink-600">
+            <span className="block text-blue-600">
               Trusted Publishers.
             </span>
             Smarter Growth.
