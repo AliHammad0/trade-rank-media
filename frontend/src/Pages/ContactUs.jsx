@@ -1,9 +1,11 @@
-
 import React from "react";
+import ceoImage from "../assets/ceo.jpeg";
+import hammadImage from "../assets/hammad.jpeg";
+import farazImage from "../assets/faraz.jpeg";
 
 const teamMembers = [
   {
-    name: " Ali Hammad",
+    name: "Ali Hammad",
     role: "Developer",
     phone: "923114237376",
     displayPhone: "+92 311 4237376",
@@ -11,7 +13,7 @@ const teamMembers = [
     service: "Web Development",
     message:
       "Hi Hammad, I'm interested in your web development services. I'd like to discuss my website requirements. Please share how we can get started.",
-    initials: "HS",
+    image: hammadImage,
   },
   {
     name: "Faraz Ahmed",
@@ -22,7 +24,7 @@ const teamMembers = [
     service: "Guest Posting, Link Insertion & Link Building",
     message:
       "Hi Faraz, I'm interested in guest posting, link insertion, and link building services. I'd like to discuss my campaign requirements and available opportunities.",
-    initials: "FA",
+    image: farazImage,
   },
   {
     name: "Muhammad Huzaifa",
@@ -33,14 +35,11 @@ const teamMembers = [
     service: "Client Inquiries, Custom Placements & Link Building",
     message:
       "Hi Muhammad Huzaifa, I'm contacting you regarding Trade Rank Media's link building services. I'd like to discuss client requirements and custom placement opportunities.",
-    initials: "MH",
+    image: ceoImage,
   },
 ];
 
 const companyEmail = "traderankmedia@gmail.com";
-
-const inputClass =
-  "w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm text-black outline-none focus:border-black";
 
 const labelClass = "mb-2 block text-sm font-bold text-black";
 
@@ -50,7 +49,7 @@ export default function Contact() {
       className="min-h-screen bg-white text-black"
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
     >
-      {/* Main Company Contact */}
+      {/* Contact Hero */}
       <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
@@ -68,56 +67,10 @@ export default function Contact() {
               Contact our team to discuss your requirements.
             </p>
           </div>
-
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="border border-gray-200 p-6 sm:p-8">
-              <div className="mb-5 flex h-12 w-12 items-center justify-center bg-gray-100 text-sm font-bold">
-                TR
-              </div>
-
-              <h2 className="text-xl font-bold">Contact Trade Rank Media</h2>
-
-              <p className="mt-3 text-sm leading-7 text-gray-600">
-                For general questions, project inquiries, and information
-                about our digital services, contact us by email.
-              </p>
-
-              <a
-                href={`mailto:${companyEmail}?subject=${encodeURIComponent(
-                  "Trade Rank Media - General Inquiry"
-                )}`}
-                className="mt-6 inline-flex max-w-full break-all border border-black bg-black px-5 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-black"
-              >
-                Email Our Company
-              </a>
-
-              <p className="mt-4 break-all text-sm text-gray-600">
-                {companyEmail}
-              </p>
-            </div>
-
-            <div className="border border-gray-200 bg-gray-50 p-6 sm:p-8">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-600">
-                Our Services
-              </p>
-
-              <h2 className="mt-3 text-xl font-bold">
-                Digital Solutions for Your Business
-              </h2>
-
-              <div className="mt-5 space-y-3 text-sm text-gray-700">
-                <p>Web Development & Website Redesign</p>
-                <p>Business Websites & Landing Pages</p>
-                <p>Guest Posting & Link Insertion</p>
-                <p>Link Building & Outreach</p>
-                <p>White-Label Support</p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Individual Team Contacts */}
+      {/* Team Contacts */}
       <section className="border-t border-gray-200 bg-gray-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
@@ -148,65 +101,73 @@ export default function Contact() {
               return (
                 <article
                   key={member.name}
-                  className="flex h-full flex-col border border-gray-200 bg-white p-6 transition duration-300 hover:border-gray-400 sm:p-8"
+                  className="flex h-full flex-col overflow-hidden border border-gray-200 bg-white transition duration-300 hover:border-gray-400"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center bg-black text-lg font-bold text-white">
-                    {member.initials}
+                  {/* Team Member Image */}
+                  <div className="h-72 overflow-hidden bg-gray-100 sm:h-80">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="h-full w-full object-cover object-center transition duration-500 hover:scale-105"
+                      loading="lazy"
+                    />
                   </div>
 
-                  <h3 className="mt-6 text-xl font-bold">{member.name}</h3>
+                  <div className="flex flex-1 flex-col p-6 sm:p-8">
+                    <h3 className="text-xl font-bold">{member.name}</h3>
 
-                  <p className="mt-2 text-sm font-semibold text-gray-600">
-                    {member.role}
-                  </p>
+                    <p className="mt-2 text-sm font-semibold text-gray-600">
+                      {member.role}
+                    </p>
 
-                  <div className="mt-6 flex-1 space-y-5">
-                    <div>
-                      <p className={labelClass}>Services</p>
-                      <p className="text-sm leading-6 text-gray-600">
-                        {member.service}
-                      </p>
+                    <div className="mt-6 flex-1 space-y-5">
+                      <div>
+                        <p className={labelClass}>Services</p>
+                        <p className="text-sm leading-6 text-gray-600">
+                          {member.service}
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className={labelClass}>WhatsApp</p>
+                        <a
+                          href={whatsappLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="break-words text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-black"
+                        >
+                          {member.displayPhone}
+                        </a>
+                      </div>
+
+                      <div>
+                        <p className={labelClass}>Email</p>
+                        <a
+                          href={emailLink}
+                          className="break-all text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-black"
+                        >
+                          {member.email}
+                        </a>
+                      </div>
                     </div>
 
-                    <div>
-                      <p className={labelClass}>WhatsApp</p>
+                    <div className="mt-8 space-y-3">
                       <a
                         href={whatsappLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="break-words text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-black"
+                        className="flex w-full items-center justify-center border border-black bg-black px-5 py-3.5 text-center text-sm font-bold text-white transition hover:bg-white hover:text-black"
                       >
-                        {member.displayPhone}
+                        Message on WhatsApp
                       </a>
-                    </div>
 
-                    <div>
-                      <p className={labelClass}>Email</p>
                       <a
                         href={emailLink}
-                        className="break-all text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-black"
+                        className="flex w-full items-center justify-center border border-gray-300 bg-white px-5 py-3.5 text-center text-sm font-bold text-black transition hover:border-black"
                       >
-                        {member.email}
+                        Send Email
                       </a>
                     </div>
-                  </div>
-
-                  <div className="mt-8 space-y-3">
-                    <a
-                      href={whatsappLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center border border-black bg-black px-5 py-3.5 text-center text-sm font-bold text-white transition hover:bg-white hover:text-black"
-                    >
-                      Message on WhatsApp
-                    </a>
-
-                    <a
-                      href={emailLink}
-                      className="flex w-full items-center justify-center border border-gray-300 bg-white px-5 py-3.5 text-center text-sm font-bold text-black transition hover:border-black"
-                    >
-                      Send Email
-                    </a>
                   </div>
                 </article>
               );
