@@ -1,10 +1,6 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  FiGlobe,
-  FiCode,
-  FiServer,
   FiUsers,
   FiLink,
   FiMonitor,
@@ -18,42 +14,12 @@ import {
   FiBriefcase,
   FiFacebook,
   FiFileText,
-  FiSettings,
+  FiGlobe,
 } from "react-icons/fi";
 
 const services = [
   {
     number: "01",
-    title: "Web Development",
-    description:
-      "We build modern, responsive business websites designed around your brand, business goals, and customer needs.",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=85",
-    icon: FiGlobe,
-    tags: ["Business Websites", "React Development", "Landing Pages"],
-  },
-  {
-    number: "02",
-    title: "Frontend Development",
-    description:
-      "We create polished user interfaces with responsive layouts, consistent styling, and smooth experiences across mobile and desktop.",
-    image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=85",
-    icon: FiCode,
-    tags: ["React", "Responsive Design", "UI Development"],
-  },
-  {
-    number: "03",
-    title: "Backend Development",
-    description:
-      "We develop the server-side functionality that powers websites, including APIs, database integration, and application logic.",
-    image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=85",
-    icon: FiServer,
-    tags: ["API Development", "Database Integration", "Server Logic"],
-  },
-  {
-    number: "04",
     title: "Facebook Ads",
     description:
       "We help businesses plan and manage Facebook advertising campaigns around their target audience, campaign objectives, and budget.",
@@ -63,7 +29,7 @@ const services = [
     tags: ["Campaign Setup", "Audience Targeting", "Ad Optimization"],
   },
   {
-    number: "05",
+    number: "02",
     title: "Guest Posting",
     description:
       "We coordinate guest article opportunities on relevant publisher websites to support off-page SEO campaigns and brand visibility.",
@@ -73,7 +39,7 @@ const services = [
     tags: ["Guest Articles", "Publisher Research", "Content Placement"],
   },
   {
-    number: "06",
+    number: "03",
     title: "Niche Edits & Link Insertion",
     description:
       "We coordinate contextual link placements within existing articles where the publisher permits them and the page fits your campaign.",
@@ -83,7 +49,7 @@ const services = [
     tags: ["Contextual Links", "Page Relevance", "Placement Coordination"],
   },
   {
-    number: "07",
+    number: "04",
     title: "Homepage & Banner Placements",
     description:
       "We check publisher availability for homepage links, banner placements, and other agreed positions based on campaign requirements.",
@@ -93,7 +59,7 @@ const services = [
     tags: ["Homepage Visibility", "Banner Placements", "Publisher Terms"],
   },
   {
-    number: "08",
+    number: "05",
     title: "Digital PR & News Publications",
     description:
       "We help coordinate relevant editorial and press release opportunities through suitable news and media publishers, subject to their policies.",
@@ -103,7 +69,7 @@ const services = [
     tags: ["Press Releases", "Editorial Coverage", "News Publications"],
   },
   {
-    number: "09",
+    number: "06",
     title: "Custom Publisher Research",
     description:
       "We research available publishers according to your target niche, countries, traffic requirements, and other campaign criteria.",
@@ -113,7 +79,7 @@ const services = [
     tags: ["Niche Research", "Target GEO", "Publisher Shortlists"],
   },
   {
-    number: "10",
+    number: "07",
     title: "Industry-Specific Link Building",
     description:
       "We explore placement opportunities across crypto, forex, trading, finance, technology, business, and other industries, subject to availability.",
@@ -205,13 +171,13 @@ const Services = () => {
 
           <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:items-end">
             <h1 className="max-w-3xl text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              Services Built Around Your Goals
+              Digital Marketing & Link Building Services
             </h1>
 
             <p className="max-w-2xl text-base leading-8 text-neutral-600 sm:text-lg">
-              From web development and digital advertising to guest posts,
-              niche edits, and custom publisher research, we help businesses
-              build their online presence around their specific requirements.
+              From Facebook advertising and guest posting to niche edits,
+              digital PR, and custom publisher research, we help businesses
+              strengthen their online visibility.
             </p>
           </div>
 
@@ -243,11 +209,13 @@ const Services = () => {
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-600">
               What We Do
             </p>
+
             <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
               Our Core Services
             </h2>
+
             <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-600 sm:text-base">
-              Practical digital services and flexible placement options for
+              Advertising, outreach, and publisher placement solutions for
               different business and campaign requirements.
             </p>
           </div>
@@ -268,6 +236,7 @@ const Services = () => {
                       loading="lazy"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
+
                     <div className="absolute inset-0 bg-black/10" />
 
                     <div className="absolute left-5 top-5 flex h-11 w-11 items-center justify-center bg-white text-pink-600">
@@ -458,7 +427,7 @@ const Services = () => {
 
             <p className="mt-4 text-sm leading-7 text-neutral-600 sm:text-base">
               We work with professionals and businesses looking for relevant
-              digital services and publishing opportunities.
+              digital marketing services and publishing opportunities.
             </p>
           </div>
 
@@ -500,9 +469,9 @@ const Services = () => {
             </h2>
 
             <p className="mt-5 max-w-2xl text-sm leading-7 text-neutral-300 sm:text-base sm:leading-8">
-              Share your website requirements or link-building campaign
-              criteria, including your target niche, countries, and preferred
-              placement types. We'll discuss the available options with you.
+              Share your link-building campaign criteria, including your
+              target niche, countries, and preferred placement types. We'll
+              discuss the available options with you.
             </p>
           </div>
 
@@ -528,4 +497,3 @@ const Services = () => {
 };
 
 export default Services;
-//
