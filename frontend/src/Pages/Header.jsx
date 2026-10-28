@@ -237,7 +237,7 @@ export default function Header() {
             onClick={closeMenu}
             className="trm-cta hidden shrink-0 items-center justify-center rounded-lg bg-black px-4 py-3.5 text-xs font-bold text-white lg:inline-flex xl:px-5"
           >
-            LET'S TALK
+            Request Quote
           </a>
 
           {/* Mobile Controls */}
