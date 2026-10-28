@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import logo from "../assets/farazchange.jpeg";
 
@@ -23,8 +24,8 @@ const navLinks = [
 function MenuIcon({ open }) {
   return (
     <svg
-      width="21"
-      height="21"
+      width="22"
+      height="22"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -52,7 +53,7 @@ function ChevronIcon({ open = false }) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={`transition-transform duration-200 ${
+      className={`shrink-0 transition-transform duration-200 ${
         open ? "rotate-180" : ""
       }`}
       aria-hidden="true"
@@ -79,6 +80,7 @@ export default function Header() {
         .trm-header,
         .trm-header * {
           font-family: Arial, Helvetica, sans-serif !important;
+          box-sizing: border-box;
         }
 
         .trm-nav-link {
@@ -104,27 +106,60 @@ export default function Header() {
           transition: background 180ms ease, color 180ms ease;
         }
 
-        /* Increased Logo Size */
         .trm-logo {
           display: block;
           width: auto;
-          height: 65px;
-          max-width: 240px;
+          height: 45px;
+          max-width: min(45vw, 170px);
           object-fit: contain;
           object-position: left center;
         }
 
-        @media (min-width: 640px) {
+        @media (min-width: 375px) {
           .trm-logo {
-            height: 80px;
-            max-width: 300px;
+            height: 49px;
+            max-width: 185px;
           }
         }
 
-        @media (min-width: 1024px) {
+        @media (min-width: 480px) {
           .trm-logo {
-            height: 95px;
-            max-width: 360px;
+            height: 55px;
+            max-width: 210px;
+          }
+        }
+
+        @media (min-width: 640px) {
+          .trm-logo {
+            height: 62px;
+            max-width: 230px;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .trm-logo {
+            height: 68px;
+            max-width: 250px;
+          }
+        }
+
+        @media (min-width: 1280px) {
+          .trm-logo {
+            height: 76px;
+            max-width: 280px;
+          }
+        }
+
+        @media (max-width: 359px) {
+          .trm-mobile-cta {
+            padding-left: 9px !important;
+            padding-right: 9px !important;
+            font-size: 9px !important;
+          }
+
+          .trm-mobile-menu-button {
+            width: 36px !important;
+            height: 36px !important;
           }
         }
 
@@ -141,16 +176,16 @@ export default function Header() {
         }
       `}</style>
 
-      <header className="trm-header sticky top-0 z-50 w-full border-b border-gray-200 bg-white font-[Arial,Helvetica,sans-serif] text-black shadow-sm">
+      <header className="trm-header sticky top-0 z-50 w-full border-b border-gray-200 bg-white text-black shadow-sm">
         <div className="h-[3px] w-full bg-black" />
 
-        <div className="mx-auto flex min-h-[76px] w-full max-w-[1440px] items-center justify-between gap-3 px-4 sm:min-h-[86px] sm:px-6 lg:min-h-[96px] lg:gap-5 lg:px-10 xl:px-14">
+        <div className="mx-auto flex min-h-[64px] w-full max-w-[1440px] items-center justify-between gap-2 px-3 min-[375px]:px-4 sm:min-h-[76px] sm:px-6 lg:min-h-[84px] lg:px-8 xl:min-h-[92px] xl:gap-4 xl:px-10 2xl:px-14">
           {/* Logo */}
           <a
             href="/"
             aria-label="Trade Rank Media home"
             onClick={closeMenu}
-            className="flex shrink-0 items-center py-1"
+            className="flex min-w-0 shrink items-center py-1"
           >
             <img
               src={logo}
@@ -159,10 +194,10 @@ export default function Header() {
             />
           </a>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation: enabled on wide screens */}
           <nav
             aria-label="Main navigation"
-            className="hidden items-center gap-0.5 lg:flex xl:gap-1"
+            className="hidden min-w-0 items-center gap-0 xl:flex"
           >
             {navLinks.map((link) =>
               link.dropdown ? (
@@ -181,7 +216,7 @@ export default function Header() {
                         setServicesOpen(false);
                       }
                     }}
-                    className="trm-nav-link flex items-center gap-2 rounded-lg px-3 py-3 text-[11px] font-bold tracking-wide text-black xl:px-3.5 xl:text-xs"
+                    className="trm-nav-link flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2.5 py-3 text-[11px] font-bold tracking-wide text-black 2xl:px-3 2xl:text-xs"
                   >
                     {link.name}
                     <ChevronIcon open={servicesOpen} />
@@ -223,7 +258,7 @@ export default function Header() {
                   key={link.name}
                   href={link.href}
                   onClick={closeMenu}
-                  className="trm-nav-link whitespace-nowrap rounded-lg px-3 py-3 text-[11px] font-bold tracking-wide text-black xl:px-3.5 xl:text-xs"
+                  className="trm-nav-link whitespace-nowrap rounded-lg px-2.5 py-3 text-[11px] font-bold tracking-wide text-black 2xl:px-3 2xl:text-xs"
                 >
                   {link.name}
                 </a>
@@ -235,60 +270,63 @@ export default function Header() {
           <a
             href="/contact"
             onClick={closeMenu}
-            className="trm-cta hidden shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-teal-400 to-emerald-600 px-4 py-3.5 text-xs font-bold text-black lg:inline-flex xl:px-5"
+            className="trm-cta hidden shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-teal-400 to-emerald-600 px-4 py-3 text-xs font-bold text-black xl:inline-flex 2xl:px-5"
           >
             Request Quote
           </a>
 
-          {/* Mobile Controls */}
-          <div className="flex shrink-0 items-center gap-2 lg:hidden">
+          {/* Mobile and Tablet Controls */}
+          <div className="flex shrink-0 items-center gap-1.5 min-[375px]:gap-2 xl:hidden">
             <a
               href="/contact"
               onClick={closeMenu}
-              className="trm-cta inline-flex min-h-9 items-center justify-center rounded-lg bg-black px-3 text-[10px] font-bold text-white sm:min-h-10 sm:px-4 sm:text-xs"
+              className="trm-cta trm-mobile-cta inline-flex min-h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-black px-3 text-[10px] font-bold text-white min-[375px]:px-3.5 sm:min-h-10 sm:px-4 sm:text-xs"
             >
               LET'S TALK
             </a>
 
             <button
               type="button"
-              onClick={() => setMenuOpen((prev) => !prev)}
+              onClick={() => {
+                setMenuOpen((prev) => !prev);
+                setMobileServicesOpen(false);
+              }}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-black"
+              className="trm-mobile-menu-button flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-black sm:h-10 sm:w-10"
             >
               <MenuIcon open={menuOpen} />
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile and Tablet Navigation */}
         <div
           id="mobile-navigation"
-          className={`overflow-hidden border-t border-gray-100 bg-white transition-[max-height,opacity] duration-300 lg:hidden ${
+          className={`overflow-hidden border-t border-gray-100 bg-white transition-[max-height,opacity] duration-300 xl:hidden ${
             menuOpen
-              ? "max-h-[850px] opacity-100"
+              ? "max-h-[90vh] overflow-y-auto opacity-100"
               : "pointer-events-none max-h-0 opacity-0"
           }`}
           aria-hidden={!menuOpen}
         >
           <nav
             aria-label="Mobile navigation"
-            className="mx-auto flex w-full max-w-2xl flex-col px-4 pb-5 pt-3 sm:px-6"
+            className="mx-auto flex w-full max-w-2xl flex-col px-3 pb-5 pt-2 min-[375px]:px-4 sm:px-6"
           >
             {navLinks.map((link, index) =>
               link.dropdown ? (
                 <div key={link.name} className="border-b border-gray-100">
-                  <div className="flex min-h-[49px] items-center">
+                  <div className="flex min-h-[48px] items-center">
                     <a
                       href={link.href}
                       tabIndex={menuOpen ? 0 : -1}
                       onClick={closeMenu}
-                      className="flex flex-1 items-center gap-3 px-2 py-3 text-[13px] font-semibold text-black sm:text-sm"
+                      className="flex min-h-[48px] min-w-0 flex-1 items-center gap-3 px-2 py-3 text-[13px] font-semibold text-black sm:text-sm"
                     >
-                      <span className="w-5 text-[10px] font-bold text-neutral-500">
-                        0{index + 1}
+                      <span className="w-5 shrink-0 text-[10px] font-bold text-neutral-500">
+                        {String(index + 1).padStart(2, "0")}
                       </span>
                       {link.name}
                     </a>
@@ -301,7 +339,7 @@ export default function Header() {
                       }
                       aria-label="Toggle services submenu"
                       aria-expanded={mobileServicesOpen}
-                      className="flex h-10 w-10 items-center justify-center rounded-lg text-black hover:bg-gray-50"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-black hover:bg-gray-50"
                     >
                       <ChevronIcon open={mobileServicesOpen} />
                     </button>
@@ -329,22 +367,22 @@ export default function Header() {
                   href={link.href}
                   tabIndex={menuOpen ? 0 : -1}
                   onClick={closeMenu}
-                  className="flex min-h-[49px] items-center gap-3 border-b border-gray-100 px-2 text-[13px] font-semibold text-black last:border-b-0 sm:text-sm"
+                  className="flex min-h-[48px] items-center gap-3 border-b border-gray-100 px-2 text-[13px] font-semibold text-black sm:text-sm"
                 >
-                  <span className="w-5 text-[10px] font-bold text-neutral-500">
-                    0{index + 1}
+                  <span className="w-5 shrink-0 text-[10px] font-bold text-neutral-500">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   {link.name}
                 </a>
               )
             )}
 
-            <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
-              <p className="text-sm font-bold text-black">
+            <div className="mt-4 rounded-xl border border-gray-200 bg-white p-3 min-[375px]:p-4">
+              <p className="text-sm font-bold text-black sm:text-base">
                 Ready to grow your business?
               </p>
 
-              <p className="mt-2 text-xs leading-5 text-neutral-600">
+              <p className="mt-2 text-xs leading-5 text-neutral-600 sm:text-sm">
                 Let's improve your online visibility and build your next
                 opportunity.
               </p>
@@ -353,7 +391,7 @@ export default function Header() {
                 href="/contact"
                 tabIndex={menuOpen ? 0 : -1}
                 onClick={closeMenu}
-                className="mt-3 inline-flex items-center rounded-md bg-black px-4 py-3 text-xs font-bold text-white"
+                className="mt-3 inline-flex min-h-10 items-center justify-center rounded-md bg-black px-4 py-3 text-xs font-bold text-white"
               >
                 Discuss Your Project
               </a>
@@ -364,3 +402,6 @@ export default function Header() {
     </>
   );
 }
+
+
+
