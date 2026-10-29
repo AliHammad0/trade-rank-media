@@ -59,7 +59,7 @@ export default function Hero() {
 
           <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl md:text-6xl xl:text-[68px]">
             Relevant Links.
-            <span className="block text-blue-600">
+            <span className="block bg-gradient-to-r from-teal-400 to-emerald-600 bg-clip-text text-transparent">
               Trusted Publishers.
             </span>
             Smarter Growth.
@@ -95,21 +95,21 @@ export default function Hero() {
 
           {/* Contact Details */}
           <div className="mt-8 flex flex-col gap-3 border-t border-neutral-200 pt-5 text-sm text-neutral-600 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6">
-            <a
+            {/* <a
               href="https://wa.me/923114237376"
               target="_blank"
               rel="noreferrer"
               className="w-fit transition-colors hover:text-pink-600"
             >
               WhatsApp: +92 311 4237376
-            </a>
+            </a> */}
 
-            <a
+            {/* <a
               href="mailto:traderankmedia@gmail.com"
               className="w-fit break-all transition-colors hover:text-pink-600"
             >
               traderankmedia@gmail.com
-            </a>
+            </a> */}
           </div>
         </div>
 
@@ -172,7 +172,7 @@ export default function Hero() {
       <div className="border-t border-neutral-200 bg-neutral-50">
         <div className="mx-auto max-w-[1440px] px-5 py-10 sm:px-8 sm:py-12 lg:px-14">
           <div className="mb-8">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-600">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#77716A]">
               Built Around Your Requirements
             </p>
             <h2 className="mt-3 max-w-2xl text-2xl font-bold tracking-tight sm:text-3xl">

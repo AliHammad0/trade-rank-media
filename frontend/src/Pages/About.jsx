@@ -167,7 +167,7 @@ export default function About() {
             <h1 className="mt-6 text-4xl font-extrabold leading-[1.12] tracking-tight min-[375px]:text-5xl sm:text-6xl lg:text-[58px] xl:text-[66px]">
               Built Around
               <span className="mt-1 block text-neutral-500">
-                Better Digital Growth.
+               <span className="text-black">Better</span> <span className="bg-gradient-to-r from-teal-400 to-emerald-600 bg-clip-text text-transparent">Digital Growth</span> 
               </span>
             </h1>
 

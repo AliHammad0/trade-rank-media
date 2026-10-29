@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -144,7 +143,7 @@ const Services = () => {
     >
       <section className="border-b border-neutral-200 bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-7xl">
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-pink-600">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#77716A]">
             Trade Rank Media / Our Services
           </p>
 
@@ -163,14 +162,14 @@ const Services = () => {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               to="/contact"
-              className="inline-flex min-h-12 items-center justify-center rounded-md bg-pink-600 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-pink-700"
+              className="inline-flex min-h-12 items-center justify-center rounded-md bg-gradient-to-r from-teal-400 to-emerald-600 px-7 py-3.5 text-sm font-bold text-black transition-colors hover:opacity-90"
             >
               Request a Quote
             </Link>
 
             <a
               href="#core-services"
-              className="inline-flex min-h-12 items-center justify-center rounded-md border border-black px-7 py-3.5 text-sm font-bold text-black transition-colors hover:bg-black hover:text-white"
+              className="inline-flex min-h-12 items-center justify-center rounded-md border border-black px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-black hover:text-white bg-[#77716A]"
             >
               Explore Our Services
             </a>
@@ -184,7 +183,7 @@ const Services = () => {
       >
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 border-b border-neutral-200 pb-6 sm:mb-12">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-600">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#77716A]">
               What We Do
             </p>
 
@@ -205,7 +204,7 @@ const Services = () => {
               return (
                 <article
                   key={service.number}
-                  className="group flex min-w-0 flex-col overflow-hidden border border-neutral-200 bg-white transition-colors duration-300 hover:border-pink-400"
+                  className="group flex min-w-0 flex-col overflow-hidden border border-neutral-200 bg-white transition-colors duration-300 hover:border-[#b69a68]"
                 >
                   <div className="relative h-52 overflow-hidden bg-neutral-100 sm:h-56">
                     <img
@@ -217,13 +216,13 @@ const Services = () => {
 
                     <div className="absolute inset-0 bg-black/10" />
 
-                    <div className="absolute left-5 top-5 flex h-11 w-11 items-center justify-center bg-white text-pink-600">
+                    <div className="absolute left-5 top-5 flex h-11 w-11 items-center justify-center bg-white text-[#8c7650]">
                       <Icon size={21} />
                     </div>
                   </div>
 
                   <div className="flex flex-1 flex-col p-5 sm:p-6">
-                    <p className="text-xs font-bold tracking-[0.15em] text-pink-600">
+                    <p className="text-xs font-bold tracking-[0.15em] text-[#8c7650]">
                       SERVICE {service.number}
                     </p>
 
@@ -248,7 +247,7 @@ const Services = () => {
 
                     <Link
                       to="/contact"
-                      className="mt-7 inline-flex w-fit border-b border-pink-600 pb-1 text-sm font-bold text-black transition-colors hover:text-pink-600"
+                      className="mt-7 inline-flex w-fit border-b border-[#8c7650] pb-1 text-sm font-bold text-black transition-colors hover:text-[#8c7650]"
                     >
                       Discuss This Service
                     </Link>
@@ -263,7 +262,7 @@ const Services = () => {
       <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-600">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8c7650]">
               Our Review Process
             </p>
 
@@ -285,10 +284,10 @@ const Services = () => {
               return (
                 <article
                   key={step.number}
-                  className="border border-neutral-200 p-6 transition-colors hover:border-pink-400 sm:p-7"
+                  className="border border-neutral-200 p-6 transition-colors hover:border-[#b69a68] sm:p-7"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold tracking-widest text-pink-600">
+                    <span className="text-sm font-bold tracking-widest text-[#8c7650]">
                       {step.number}
                     </span>
                     <Icon size={23} className="text-neutral-500" />
@@ -311,7 +310,7 @@ const Services = () => {
       <section className="border-y border-neutral-200 bg-neutral-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-600">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8c7650]">
               Quality Over One Metric
             </p>
 
@@ -353,7 +352,7 @@ const Services = () => {
           </div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-600">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8c7650]">
               Editorial & Digital PR
             </p>
 
@@ -372,7 +371,7 @@ const Services = () => {
               contribute to brand awareness and a stronger online presence.
             </p>
 
-            <p className="mt-4 border-l-2 border-pink-500 pl-4 text-sm leading-7 text-neutral-500">
+            <p className="mt-4 border-l-2 border-[#b69a68] pl-4 text-sm leading-7 text-neutral-500">
               Editorial placement does not guarantee citations or mentions in
               ChatGPT, Perplexity, Google AI Overviews, or any other AI search
               platform.
@@ -380,7 +379,7 @@ const Services = () => {
 
             <Link
               to="/contact"
-              className="mt-7 inline-flex min-h-12 items-center justify-center rounded-md bg-pink-600 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-pink-700"
+              className="mt-7 inline-flex min-h-12 items-center justify-center rounded-md bg-[#8c7650] px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#6f5c3d]"
             >
               Discuss Your Campaign
             </Link>
@@ -391,7 +390,7 @@ const Services = () => {
       <section className="bg-neutral-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-600">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8c7650]">
               Who We Work With
             </p>
 
@@ -414,7 +413,7 @@ const Services = () => {
                   key={audience.title}
                   className="border border-neutral-200 bg-white p-6 sm:p-8"
                 >
-                  <Icon size={26} className="text-pink-600" />
+                  <Icon size={26} className="text-[#8c7650]" />
 
                   <h3 className="mt-5 text-xl font-bold">
                     {audience.title}
@@ -433,7 +432,7 @@ const Services = () => {
       <section className="bg-black px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-400">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#c5ad83]">
               Let's Work Together
             </p>
 
@@ -451,7 +450,7 @@ const Services = () => {
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col">
             <Link
               to="/contact"
-              className="inline-flex min-h-12 items-center justify-center rounded-md bg-pink-600 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-pink-700"
+              className="inline-flex min-h-12 items-center justify-center rounded-md bg-[#8c7650] px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#6f5c3d]"
             >
               Request a Quote
             </Link>
