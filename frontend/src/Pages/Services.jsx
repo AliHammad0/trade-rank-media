@@ -23,7 +23,7 @@ const services = [
     description:
       "We coordinate contextual link placements within existing articles where the publisher permits them and the page fits your campaign.",
     image:
-      "https://images.unsplash.com/photo-1467232004584-a241de8bcf05?auto=format&fit=crop&w=900&q=85",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKFsDs3iIJPqoIoc6PUKAnvRL8pOQ1asaROCutDYHffw&s=10",
     icon: FiLink,
     tags: ["Contextual Links", "Page Relevance", "Placement Coordination"],
   },
@@ -33,7 +33,7 @@ const services = [
     description:
       "We check publisher availability for homepage links, banner placements, and other agreed positions based on campaign requirements.",
     image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=85",
+      "https://cdn.dribbble.com/userupload/25953681/file/original-49c0ee6a37ed6888bd862681d826e113.jpg",
     icon: FiMonitor,
     tags: ["Homepage Visibility", "Banner Placements", "Publisher Terms"],
   },
@@ -43,7 +43,7 @@ const services = [
     description:
       "We help coordinate relevant editorial and press release opportunities through suitable news and media publishers, subject to their policies.",
     image:
-      "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=900&q=85",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfWDtrA2mVvKl7Nc0WlqFFu14Vq8e8zv9VEKe9C7Ul-7tLHelQ-0InwqUh&s=10",
     icon: FiFileText,
     tags: ["Press Releases", "Editorial Coverage", "News Publications"],
   },
@@ -53,7 +53,7 @@ const services = [
     description:
       "We research available publishers according to your target niche, countries, traffic requirements, and other campaign criteria.",
     image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85",
+      "https://static.helpjuice.com/helpjuice_production/uploads/upload/image/15882/direct/1773417928724/cabinets%20and%20curiosities%20homepage.png",
     icon: FiSearch,
     tags: ["Niche Research", "Target GEO", "Publisher Shortlists"],
   },
@@ -63,7 +63,7 @@ const services = [
     description:
       "We explore placement opportunities across crypto, forex, trading, finance, technology, business, and other industries, subject to availability.",
     image:
-      "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=85",
+      "https://www.ecommercebridge.com/wp-content/uploads/2024/11/link-building-4-1024x536.jpg",
     icon: FiTarget,
     tags: ["Crypto & Forex", "Finance & Trading", "Technology"],
   },
@@ -455,12 +455,12 @@ const Services = () => {
               Request a Quote
             </Link>
 
-            <Link
+            {/* <Link
               to="/contact"
               className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/40 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white hover:text-black"
             >
               Contact Our Team
-            </Link>
+            </Link> */}
           </div>
         </div>
       </section>
