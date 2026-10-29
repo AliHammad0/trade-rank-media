@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import logo from "../assets/farazchange.jpeg";
 
 const navLinks = [
@@ -33,10 +34,46 @@ function MenuIcon({ open }) {
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const headerRef = useRef(null);
 
   const closeMenu = () => {
     setMenuOpen(false);
   };
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setHeaderVisible(true);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1280) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [menuOpen]);
 
   return (
     <>
@@ -47,8 +84,23 @@ export default function Header() {
           box-sizing: border-box;
         }
 
+        .trm-header {
+          transform: translateY(-14px);
+          opacity: 0;
+          transition:
+            opacity 650ms ease,
+            transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .trm-header.trm-header-visible {
+          transform: translateY(0);
+          opacity: 1;
+        }
+
         .trm-nav-link {
-          transition: color 200ms ease, background 200ms ease;
+          transition:
+            color 200ms ease,
+            background 200ms ease;
         }
 
         .trm-nav-link:hover {
@@ -57,7 +109,10 @@ export default function Header() {
         }
 
         .trm-cta {
-          transition: transform 200ms ease, box-shadow 200ms ease;
+          transition:
+            transform 250ms ease,
+            box-shadow 250ms ease,
+            background 250ms ease;
         }
 
         .trm-cta:hover {
@@ -72,6 +127,52 @@ export default function Header() {
           max-width: min(45vw, 170px);
           object-fit: contain;
           object-position: left center;
+          transition: transform 300ms ease;
+        }
+
+        .trm-logo:hover {
+          transform: scale(1.025);
+        }
+
+        .trm-mobile-menu-button {
+          transition:
+            background 200ms ease,
+            border-color 200ms ease,
+            transform 200ms ease;
+        }
+
+        .trm-mobile-menu-button:hover {
+          background: #f5f5f5;
+          border-color: #bdbdbd;
+        }
+
+        .trm-mobile-menu-button:active {
+          transform: scale(.95);
+        }
+
+        .trm-mobile-link {
+          opacity: 0;
+          transform: translateY(8px);
+          transition:
+            opacity 250ms ease,
+            transform 250ms ease,
+            background 200ms ease;
+        }
+
+        .trm-mobile-link.trm-mobile-link-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .trm-mobile-link:hover {
+          background: #f8f8f8;
+        }
+
+        .trm-mobile-panel {
+          transition:
+            max-height 350ms ease,
+            opacity 250ms ease,
+            visibility 350ms ease;
         }
 
         @media (min-width: 375px) {
@@ -123,18 +224,36 @@ export default function Header() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .trm-nav-link,
-          .trm-cta {
+          .trm-header,
+          .trm-header *,
+          .trm-mobile-panel {
+            animation: none !important;
             transition: none !important;
           }
 
-          .trm-cta:hover {
+          .trm-header {
+            transform: none;
+            opacity: 1;
+          }
+
+          .trm-mobile-link {
+            opacity: 1;
+            transform: none;
+          }
+
+          .trm-cta:hover,
+          .trm-logo:hover {
             transform: none;
           }
         }
       `}</style>
 
-      <header className="trm-header sticky top-0 z-50 w-full border-b border-gray-200 bg-white text-black shadow-sm">
+      <header
+        ref={headerRef}
+        className={`trm-header sticky top-0 z-50 w-full border-b border-gray-200 bg-white text-black shadow-sm ${
+          headerVisible ? "trm-header-visible" : ""
+        }`}
+      >
         <div className="h-[3px] w-full bg-black" />
 
         <div className="mx-auto flex min-h-[64px] w-full max-w-[1440px] items-center justify-between gap-2 px-3 min-[375px]:px-4 sm:min-h-[76px] sm:px-6 lg:min-h-[84px] lg:px-8 xl:min-h-[92px] xl:gap-4 xl:px-10 2xl:px-14">
@@ -157,11 +276,12 @@ export default function Header() {
             aria-label="Main navigation"
             className="hidden min-w-0 items-center gap-0 xl:flex"
           >
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={closeMenu}
+                style={{ transitionDelay: `${index * 45}ms` }}
                 className="trm-nav-link whitespace-nowrap rounded-lg px-2.5 py-3 text-[11px] font-bold tracking-wide text-black 2xl:px-3 2xl:text-xs"
               >
                 {link.name}
@@ -204,10 +324,10 @@ export default function Header() {
         {/* Mobile and Tablet Navigation */}
         <div
           id="mobile-navigation"
-          className={`overflow-hidden border-t border-gray-100 bg-white transition-[max-height,opacity] duration-300 xl:hidden ${
+          className={`trm-mobile-panel overflow-hidden border-t border-gray-100 bg-white xl:hidden ${
             menuOpen
               ? "max-h-[90vh] overflow-y-auto opacity-100"
-              : "pointer-events-none max-h-0 opacity-0"
+              : "pointer-events-none invisible max-h-0 opacity-0"
           }`}
           aria-hidden={!menuOpen}
         >
@@ -221,7 +341,12 @@ export default function Header() {
                 href={link.href}
                 tabIndex={menuOpen ? 0 : -1}
                 onClick={closeMenu}
-                className="flex min-h-[48px] items-center gap-3 border-b border-gray-100 px-2 text-[13px] font-semibold text-black sm:text-sm"
+                style={{
+                  transitionDelay: menuOpen ? `${index * 45}ms` : "0ms",
+                }}
+                className={`trm-mobile-link flex min-h-[48px] items-center gap-3 border-b border-gray-100 px-2 text-[13px] font-semibold text-black sm:text-sm ${
+                  menuOpen ? "trm-mobile-link-visible" : ""
+                }`}
               >
                 <span className="w-5 shrink-0 text-[10px] font-bold text-neutral-500">
                   {String(index + 1).padStart(2, "0")}
@@ -245,7 +370,7 @@ export default function Header() {
                 href="/contact"
                 tabIndex={menuOpen ? 0 : -1}
                 onClick={closeMenu}
-                className="mt-3 inline-flex min-h-10 items-center justify-center rounded-md bg-black px-4 py-3 text-xs font-bold text-white"
+                className="trm-cta mt-3 inline-flex min-h-10 items-center justify-center rounded-md bg-black px-4 py-3 text-xs font-bold text-white"
               >
                 Discuss Your Project
               </a>

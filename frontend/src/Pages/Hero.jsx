@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const images = [
@@ -31,6 +30,7 @@ const benefits = [
 
 export default function Hero() {
   const [current, setCurrent] = useState(0);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -40,24 +40,133 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) return;
+
+    const elements = section.querySelectorAll(".hero-reveal");
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      elements.forEach((element) => element.classList.add("hero-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("hero-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px",
+      }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="overflow-hidden bg-white text-black">
+    <section
+      ref={sectionRef}
+      className="hero-section overflow-hidden bg-white text-black"
+    >
+      <style>{`
+        .hero-reveal {
+          opacity: 0;
+          transform: translateY(28px);
+          transition:
+            opacity 700ms ease,
+            transform 700ms cubic-bezier(0.2, 0.65, 0.3, 1);
+        }
+
+        .hero-reveal.hero-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .hero-delay-1 { transition-delay: 100ms; }
+        .hero-delay-2 { transition-delay: 200ms; }
+        .hero-delay-3 { transition-delay: 300ms; }
+        .hero-delay-4 { transition-delay: 400ms; }
+
+        .hero-image {
+          transform: scale(1.06);
+          transition:
+            opacity 1000ms ease,
+            transform 6500ms ease;
+        }
+
+        .hero-image-active {
+          transform: scale(1);
+        }
+
+        .hero-cta {
+          transition:
+            transform 250ms ease,
+            box-shadow 250ms ease,
+            background-color 250ms ease,
+            color 250ms ease;
+        }
+
+        .hero-cta:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .hero-benefit {
+          transition:
+            border-color 300ms ease,
+            transform 300ms ease;
+        }
+
+        .hero-benefit:hover {
+          transform: translateY(-5px);
+        }
+
+        .hero-indicator {
+          transition: width 300ms ease, background-color 300ms ease;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-reveal,
+          .hero-image,
+          .hero-cta,
+          .hero-benefit,
+          .hero-indicator {
+            animation: none !important;
+            transition: none !important;
+            transform: none !important;
+          }
+
+          .hero-reveal {
+            opacity: 1 !important;
+          }
+        }
+      `}</style>
+
       {/* Main Hero */}
       <div className="mx-auto grid min-h-[620px] max-w-[1440px] items-center gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-2 lg:gap-14 lg:px-14 lg:py-20">
         {/* Hero Content */}
         <div className="relative z-10 order-2 lg:order-1">
-          <div className="mb-6 inline-flex items-center gap-3">
+          <div className="hero-reveal mb-6 inline-flex items-center gap-3">
             <span className="h-[2px] w-9 bg-pink-500" />
-            <span className="text-xs font-bold uppercase tracking-[0.24em] bg-gradient-to-r from-teal-400 to-emerald-600 sm:text-sm">
+            <span className="bg-gradient-to-r from-teal-400 to-emerald-600 bg-clip-text text-xs font-bold uppercase tracking-[0.24em] text-transparent sm:text-sm">
               Trade Rank Media
             </span>
           </div>
 
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-black sm:text-sm">
+          <p className="hero-reveal hero-delay-1 mb-4 text-xs font-bold uppercase tracking-[0.2em] text-black sm:text-sm">
             Link Building & Digital PR
           </p>
 
-          <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl md:text-6xl xl:text-[68px]">
+          <h1 className="hero-reveal hero-delay-2 max-w-3xl text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl md:text-6xl xl:text-[68px]">
             Relevant Links.
             <span className="block bg-gradient-to-r from-teal-400 to-emerald-600 bg-clip-text text-transparent">
               Trusted Publishers.
@@ -65,63 +174,49 @@ export default function Hero() {
             Smarter Growth.
           </h1>
 
-          <p className="mt-6 max-w-xl text-base leading-7 text-neutral-600 sm:text-lg sm:leading-8">
+          <p className="hero-reveal hero-delay-3 mt-6 max-w-xl text-base leading-7 text-neutral-600 sm:text-lg sm:leading-8">
             Strategic guest posting, niche edits, and editorial placement
             opportunities tailored to your industry, target market, and
             campaign requirements.
           </p>
 
-          <p className="mt-4 max-w-xl text-sm leading-7 text-neutral-500 sm:text-base">
+          <p className="hero-reveal hero-delay-3 mt-4 max-w-xl text-sm leading-7 text-neutral-500 sm:text-base">
             Supporting SEO agencies, freelancers, and businesses across
             crypto, forex, finance, technology, and other industries.
           </p>
 
           {/* CTA Buttons */}
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div className="hero-reveal hero-delay-4 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               to="/contact"
-              className="inline-flex min-h-12 items-center justify-center rounded-md bg-gradient-to-r from-teal-400 to-emerald-600 px-7 py-3.5 text-sm font-bold text-white transition-colors duration-300 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+              className="hero-cta inline-flex min-h-12 items-center justify-center rounded-md bg-gradient-to-r from-teal-400 to-emerald-600 px-7 py-3.5 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             >
               Request a Quote
             </Link>
 
             <Link
               to="/services"
-              className="inline-flex min-h-12 items-center justify-center rounded-md border border-black bg-white px-7 py-3.5 text-sm font-bold text-black transition-colors duration-300 hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+              className="hero-cta inline-flex min-h-12 items-center justify-center rounded-md border border-black bg-white px-7 py-3.5 text-sm font-bold text-black hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
             >
               Explore Our Services
             </Link>
           </div>
 
           {/* Contact Details */}
-          <div className="mt-8 flex flex-col gap-3 border-t border-neutral-200 pt-5 text-sm text-neutral-600 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6">
-            {/* <a
-              href="https://wa.me/923114237376"
-              target="_blank"
-              rel="noreferrer"
-              className="w-fit transition-colors hover:text-pink-600"
-            >
-              WhatsApp: +92 311 4237376
-            </a> */}
-
-            {/* <a
-              href="mailto:traderankmedia@gmail.com"
-              className="w-fit break-all transition-colors hover:text-pink-600"
-            >
-              traderankmedia@gmail.com
-            </a> */}
+          <div className="hero-reveal hero-delay-4 mt-8 flex flex-col gap-3 border-t border-neutral-200 pt-5 text-sm text-neutral-600 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6">
+            {/* Contact links can be added here */}
           </div>
         </div>
 
         {/* Image Slider */}
-        <div className="order-1 lg:order-2">
-          <div className="relative h-[260px] overflow-hidden rounded-xl bg-neutral-100 sm:h-[380px] md:h-[440px] lg:h-[500px]">
+        <div className="hero-reveal order-1 lg:order-2">
+          <div className="group relative h-[260px] overflow-hidden rounded-xl bg-neutral-100 sm:h-[380px] md:h-[440px] lg:h-[500px]">
             {images.map((image, index) => (
               <div
                 key={image}
-                className={`absolute inset-0 transition-opacity duration-1000 ${
+                className={`hero-image absolute inset-0 ${
                   current === index
-                    ? "z-10 opacity-100"
+                    ? "hero-image-active z-10 opacity-100"
                     : "pointer-events-none z-0 opacity-0"
                 }`}
               >
@@ -136,9 +231,9 @@ export default function Hero() {
               </div>
             ))}
 
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-            <div className="absolute bottom-5 left-5 z-20 text-white sm:bottom-7 sm:left-7">
+            <div className="absolute bottom-5 left-5 z-20 text-white transition-transform duration-500 group-hover:translate-y-[-3px] sm:bottom-7 sm:left-7">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
                 Built Around Your Campaign
               </p>
@@ -156,10 +251,10 @@ export default function Hero() {
                   onClick={() => setCurrent(index)}
                   aria-label={`Show image ${index + 1}`}
                   aria-pressed={current === index}
-                  className={`h-2 rounded-full transition-all duration-300 ${
+                  className={`hero-indicator h-2 rounded-full ${
                     current === index
-                      ? "w-7 bg-pink-500"
-                      : "w-2 bg-white/80"
+                      ? "w-7 bg-teal-400"
+                      : "w-2 bg-white/80 hover:bg-white"
                   }`}
                 />
               ))}
@@ -171,7 +266,7 @@ export default function Hero() {
       {/* Supporting Points */}
       <div className="border-t border-neutral-200 bg-neutral-50">
         <div className="mx-auto max-w-[1440px] px-5 py-10 sm:px-8 sm:py-12 lg:px-14">
-          <div className="mb-8">
+          <div className="hero-reveal mb-8">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#77716A]">
               Built Around Your Requirements
             </p>
@@ -181,12 +276,13 @@ export default function Hero() {
           </div>
 
           <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-            {benefits.map((benefit) => (
+            {benefits.map((benefit, index) => (
               <article
                 key={benefit.number}
-                className="border-t-2 border-neutral-200 pt-5 transition-colors duration-300 hover:border-pink-500"
+                style={{ transitionDelay: `${index * 120}ms` }}
+                className="hero-reveal hero-benefit border-t-2 border-neutral-200 pt-5 hover:border-teal-500"
               >
-                <span className="text-xs font-bold tracking-[0.15em] text-pink-600">
+                <span className="text-xs font-bold tracking-[0.15em] text-teal-700">
                   {benefit.number}
                 </span>
 

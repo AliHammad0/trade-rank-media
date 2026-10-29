@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import image from "../assets/com.jpeg";
 
 const services = [
@@ -112,14 +112,88 @@ function CheckIcon() {
 }
 
 export default function About() {
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    const main = mainRef.current;
+
+    if (!main) return;
+
+    const elements = main.querySelectorAll(
+      ":scope > section, .about-card, .about-image-wrap, .about-feature"
+    );
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: "0px 0px -35px 0px",
+      }
+    );
+
+    elements.forEach((element, index) => {
+      element.classList.add("scroll-reveal");
+
+      if (element.matches(".about-card")) {
+        element.style.setProperty(
+          "--reveal-delay",
+          `${(index % 4) * 90}ms`
+        );
+      }
+
+      observer.observe(element);
+    });
+
+    return () => {
+      observer.disconnect();
+
+      elements.forEach((element) => {
+        element.classList.remove("scroll-reveal", "is-visible");
+        element.style.removeProperty("--reveal-delay");
+      });
+    };
+  }, []);
+
   return (
     <main
+      ref={mainRef}
       className="overflow-hidden bg-white text-black"
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
     >
       <style>{`
         .about-hero {
           background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+        }
+
+        /* Scroll entrance animation */
+        .scroll-reveal {
+          opacity: 0;
+          transform: translate3d(0, 28px, 0);
+          transition:
+            opacity 650ms ease,
+            transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+          transition-delay: var(--reveal-delay, 0ms);
+          will-change: opacity, transform;
+        }
+
+        .scroll-reveal.is-visible {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
         }
 
         .about-image {
@@ -131,7 +205,9 @@ export default function About() {
         }
 
         .about-card {
-          transition: border-color .2s ease, box-shadow .2s ease,
+          transition:
+            border-color .2s ease,
+            box-shadow .2s ease,
             transform .2s ease;
         }
 
@@ -148,10 +224,15 @@ export default function About() {
         }
 
         @media (prefers-reduced-motion: reduce) {
+          .scroll-reveal,
           .about-image,
           .about-card,
           .about-button {
             transition: none !important;
+            animation: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+            will-change: auto !important;
           }
         }
       `}</style>
@@ -167,7 +248,10 @@ export default function About() {
             <h1 className="mt-6 text-4xl font-extrabold leading-[1.12] tracking-tight min-[375px]:text-5xl sm:text-6xl lg:text-[58px] xl:text-[66px]">
               Built Around
               <span className="mt-1 block text-neutral-500">
-               <span className="text-black">Better</span> <span className="bg-gradient-to-r from-teal-400 to-emerald-600 bg-clip-text text-transparent">Digital Growth</span> 
+                <span className="text-black">Better</span>{" "}
+                <span className="bg-gradient-to-r from-teal-400 to-emerald-600 bg-clip-text text-transparent">
+                  Digital Growth
+                </span>
               </span>
             </h1>
 
@@ -215,7 +299,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* Existing com.jpeg image */}
           <div className="about-image-wrap relative mx-auto w-full max-w-[580px]">
             <div className="absolute -inset-3 rounded-3xl bg-neutral-100 sm:-inset-4" />
 

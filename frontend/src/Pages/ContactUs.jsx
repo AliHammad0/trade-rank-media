@@ -1,4 +1,5 @@
 
+import { useEffect, useRef } from "react";
 import {
   FaWhatsapp,
   FaLinkedin,
@@ -43,10 +44,107 @@ const teamMembers = [
 ];
 
 export default function ContactUs() {
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    const main = mainRef.current;
+
+    if (!main) return;
+
+    const elements = main.querySelectorAll(".contact-reveal");
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (
+      prefersReducedMotion ||
+      !("IntersectionObserver" in window)
+    ) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: "0px 0px -30px 0px",
+      }
+    );
+
+    elements.forEach((element, index) => {
+      element.style.setProperty(
+        "--reveal-delay",
+        `${(index % 3) * 100}ms`
+      );
+
+      observer.observe(element);
+    });
+
+    return () => {
+      observer.disconnect();
+
+      elements.forEach((element) => {
+        element.classList.remove("is-visible");
+        element.style.removeProperty("--reveal-delay");
+      });
+    };
+  }, []);
+
   return (
-    <main className="min-h-screen bg-[#faf9f6] font-[Arial,sans-serif] text-[#191919]">
+    <main
+      ref={mainRef}
+      className="min-h-screen bg-[#faf9f6] font-[Arial,sans-serif] text-[#191919]"
+    >
+      <style>{`
+        .contact-reveal {
+          opacity: 0;
+          transform: translate3d(0, 26px, 0);
+          transition:
+            opacity 650ms ease,
+            transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+          transition-delay: var(--reveal-delay, 0ms);
+          will-change: opacity, transform;
+        }
+
+        .contact-reveal.is-visible {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+
+        .contact-team-card {
+          transition:
+            transform 300ms ease,
+            box-shadow 300ms ease,
+            border-color 300ms ease;
+        }
+
+        .contact-team-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 20px 35px -22px rgba(25, 25, 25, 0.25);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .contact-reveal,
+          .contact-team-card {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
+            will-change: auto !important;
+          }
+        }
+      `}</style>
+
       {/* Hero Section */}
-      <section className="px-5 pb-16 pt-20 sm:px-8 sm:pb-20 sm:pt-24">
+      <section className="contact-reveal px-5 pb-16 pt-20 sm:px-8 sm:pb-20 sm:pt-24">
         <div className="mx-auto max-w-5xl text-center">
           <span className="mb-5 inline-block text-xs font-bold uppercase tracking-[0.3em] text-[#8c7650]">
             Trade Rank Media
@@ -72,7 +170,7 @@ export default function ContactUs() {
       {/* Team Section */}
       <section className="px-5 pb-20 sm:px-8">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-10">
+          <div className="contact-reveal mb-10">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8c7650]">
               Meet Our Team
             </p>
@@ -88,10 +186,11 @@ export default function ContactUs() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {teamMembers.map((member) => (
+            {teamMembers.map((member, index) => (
               <article
                 key={member.name}
-                className="overflow-hidden rounded-2xl border border-[#e9e5dd] bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                style={{ "--reveal-delay": `${index * 120}ms` }}
+                className="contact-reveal contact-team-card overflow-hidden rounded-2xl border border-[#e9e5dd] bg-white"
               >
                 <div className="flex h-72 items-center justify-center overflow-hidden bg-[#f0ede6]">
                   <img
@@ -155,7 +254,7 @@ export default function ContactUs() {
       </section>
 
       {/* Contact CTA */}
-      <section className="px-5 pb-20 sm:px-8">
+      <section className="contact-reveal px-5 pb-20 sm:px-8">
         <div className="mx-auto max-w-4xl rounded-3xl bg-[#eee8dc] px-6 py-12 text-center sm:px-12 sm:py-16">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8c7650]">
             Your Next Campaign Starts Here

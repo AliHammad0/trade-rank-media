@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const process = [
   {
@@ -74,13 +74,99 @@ const services = [
 ];
 
 const HowWeWork = () => {
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    const main = mainRef.current;
+
+    if (!main) return;
+
+    const elements = main.querySelectorAll(".scroll-reveal-target");
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (
+      prefersReducedMotion ||
+      !("IntersectionObserver" in window)
+    ) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: "0px 0px -30px 0px",
+      }
+    );
+
+    elements.forEach((element, index) => {
+      element.classList.add("scroll-reveal");
+
+      if (element.hasAttribute("data-reveal-stagger")) {
+        element.style.setProperty(
+          "--reveal-delay",
+          `${(index % 4) * 90}ms`
+        );
+      }
+
+      observer.observe(element);
+    });
+
+    return () => {
+      observer.disconnect();
+
+      elements.forEach((element) => {
+        element.classList.remove("scroll-reveal", "is-visible");
+        element.style.removeProperty("--reveal-delay");
+      });
+    };
+  }, []);
+
   return (
     <main
+      ref={mainRef}
       className="min-h-screen overflow-hidden bg-white text-black"
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
     >
+      <style>{`
+        .scroll-reveal {
+          opacity: 0;
+          transform: translate3d(0, 26px, 0);
+          transition:
+            opacity 650ms ease,
+            transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+          transition-delay: var(--reveal-delay, 0ms);
+          will-change: opacity, transform;
+        }
+
+        .scroll-reveal.is-visible {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .scroll-reveal {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
+            will-change: auto !important;
+          }
+        }
+      `}</style>
+
       {/* Hero */}
-      <section className="border-b border-gray-200 px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-24 lg:px-16 lg:py-28">
+      <section className="scroll-reveal-target border-b border-gray-200 px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-24 lg:px-16 lg:py-28">
         <div className="mx-auto max-w-7xl">
           <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.25em] text-gray-600 sm:text-xs sm:tracking-[0.3em]">
             HOW WE WORK
@@ -116,7 +202,7 @@ const HowWeWork = () => {
       </section>
 
       {/* Process Introduction */}
-      <section className="px-4 py-16 sm:px-6 sm:py-20 md:px-8 lg:px-16 lg:py-24">
+      <section className="scroll-reveal-target px-4 py-16 sm:px-6 sm:py-20 md:px-8 lg:px-16 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 grid gap-5 sm:mb-14 md:grid-cols-2 md:items-end md:gap-8 lg:mb-16">
             <div>
@@ -138,10 +224,11 @@ const HowWeWork = () => {
 
           {/* Process Steps */}
           <div className="border-t border-gray-200">
-            {process.map((step) => (
+            {process.map((step, index) => (
               <article
                 key={step.number}
-                className="grid gap-4 border-b border-gray-200 py-7 sm:gap-5 sm:py-9 md:grid-cols-[64px_minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-7 md:py-10 lg:grid-cols-[90px_minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-10 lg:py-12"
+                data-reveal-stagger
+                className="scroll-reveal-target grid gap-4 border-b border-gray-200 py-7 sm:gap-5 sm:py-9 md:grid-cols-[64px_minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-7 md:py-10 lg:grid-cols-[90px_minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-10 lg:py-12"
               >
                 <div className="flex items-start">
                   <span className="text-xs font-bold tracking-[0.2em] text-gray-500 sm:text-sm">
@@ -178,7 +265,7 @@ const HowWeWork = () => {
       </section>
 
       {/* Services */}
-      <section className="border-y border-gray-200 bg-[#fafafa] px-4 py-16 sm:px-6 sm:py-20 md:px-8 lg:px-16 lg:py-24">
+      <section className="scroll-reveal-target border-y border-gray-200 bg-[#fafafa] px-4 py-16 sm:px-6 sm:py-20 md:px-8 lg:px-16 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-9 max-w-2xl sm:mb-12">
             <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.25em] text-gray-600 sm:text-xs">
@@ -196,11 +283,12 @@ const HowWeWork = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-3 min-[520px]:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-            {services.map((service) => (
+            {services.map((service, index) => (
               <a
                 key={service.title}
                 href={service.href}
-                className="group flex min-h-[180px] flex-col border border-gray-200 bg-white p-5 transition-colors duration-200 hover:border-black sm:min-h-[200px] sm:p-6"
+                data-reveal-stagger
+                className="scroll-reveal-target group flex min-h-[180px] flex-col border border-gray-200 bg-white p-5 transition-colors duration-200 hover:border-black sm:min-h-[200px] sm:p-6"
               >
                 <h3 className="text-base font-bold leading-snug sm:text-lg">
                   {service.title}
@@ -220,7 +308,7 @@ const HowWeWork = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="px-4 py-16 text-center sm:px-6 sm:py-20 md:px-8 lg:py-24">
+      <section className="scroll-reveal-target px-4 py-16 text-center sm:px-6 sm:py-20 md:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl">
           <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.25em] text-gray-600 sm:text-xs">
             LET'S WORK TOGETHER

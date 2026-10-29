@@ -1,10 +1,10 @@
-import React from "react";
+
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   FiUsers,
   FiLink,
   FiMonitor,
-  FiEdit3,
   FiSearch,
   FiTrendingUp,
   FiShield,
@@ -136,12 +136,132 @@ const audiences = [
 ];
 
 const Services = () => {
+  const pageRef = useRef(null);
+
+  useEffect(() => {
+    const page = pageRef.current;
+
+    if (!page) return;
+
+    const elements = page.querySelectorAll(".service-reveal");
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      elements.forEach((element) => {
+        element.classList.add("service-visible");
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("service-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -30px 0px",
+      }
+    );
+
+    elements.forEach((element, index) => {
+      element.style.setProperty(
+        "--service-delay",
+        `${(index % 3) * 100}ms`
+      );
+
+      observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main
-      className="min-h-screen overflow-hidden bg-white text-black"
+      ref={pageRef}
+      className="service-page min-h-screen overflow-hidden bg-white text-black"
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
     >
-      <section className="border-b border-neutral-200 bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+      <style>{`
+        .service-page .service-reveal {
+          opacity: 0;
+          transform: translateY(26px);
+          transition:
+            opacity 700ms ease,
+            transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+          transition-delay: var(--service-delay, 0ms);
+        }
+
+        .service-page .service-reveal.service-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .service-page .service-card {
+          transition:
+            opacity 700ms ease,
+            transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 300ms ease,
+            box-shadow 300ms ease;
+        }
+
+        .service-page .service-card:hover {
+          border-color: #b69a68;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .service-page .service-image {
+          transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .service-page .service-card:hover .service-image {
+          transform: scale(1.04);
+        }
+
+        .service-page .service-cta {
+          transition:
+            background-color 250ms ease,
+            color 250ms ease,
+            transform 250ms ease,
+            box-shadow 250ms ease;
+        }
+
+        .service-page .service-cta:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+        }
+
+        .service-page .service-text-link {
+          transition: color 250ms ease, border-color 250ms ease;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .service-page .service-reveal {
+            opacity: 1;
+            transform: none;
+            transition: none;
+          }
+
+          .service-page .service-card,
+          .service-page .service-image,
+          .service-page .service-cta,
+          .service-page .service-text-link {
+            transition: none;
+          }
+
+          .service-page .service-card:hover,
+          .service-page .service-card:hover .service-image,
+          .service-page .service-cta:hover {
+            transform: none;
+          }
+        }
+      `}</style>
+
+      {/* Hero */}
+      <section className="service-reveal border-b border-neutral-200 bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#77716A]">
             Trade Rank Media / Our Services
@@ -162,14 +282,14 @@ const Services = () => {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               to="/contact"
-              className="inline-flex min-h-12 items-center justify-center rounded-md bg-gradient-to-r from-teal-400 to-emerald-600 px-7 py-3.5 text-sm font-bold text-black transition-colors hover:opacity-90"
+              className="service-cta inline-flex min-h-12 items-center justify-center rounded-md bg-gradient-to-r from-teal-400 to-emerald-600 px-7 py-3.5 text-sm font-bold text-black hover:opacity-90"
             >
               Request a Quote
             </Link>
 
             <a
               href="#core-services"
-              className="inline-flex min-h-12 items-center justify-center rounded-md border border-black px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-black hover:text-white bg-[#77716A]"
+              className="service-cta inline-flex min-h-12 items-center justify-center rounded-md border border-black bg-[#77716A] px-7 py-3.5 text-sm font-bold text-white hover:bg-black"
             >
               Explore Our Services
             </a>
@@ -177,12 +297,13 @@ const Services = () => {
         </div>
       </section>
 
+      {/* Core Services */}
       <section
         id="core-services"
         className="bg-neutral-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24"
       >
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 border-b border-neutral-200 pb-6 sm:mb-12">
+          <div className="service-reveal mb-10 border-b border-neutral-200 pb-6 sm:mb-12">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#77716A]">
               What We Do
             </p>
@@ -204,14 +325,14 @@ const Services = () => {
               return (
                 <article
                   key={service.number}
-                  className="group flex min-w-0 flex-col overflow-hidden border border-neutral-200 bg-white transition-colors duration-300 hover:border-[#b69a68]"
+                  className="service-reveal service-card group flex min-w-0 flex-col overflow-hidden border border-neutral-200 bg-white"
                 >
                   <div className="relative h-52 overflow-hidden bg-neutral-100 sm:h-56">
                     <img
                       src={service.image}
                       alt={service.title}
                       loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      className="service-image h-full w-full object-cover"
                     />
 
                     <div className="absolute inset-0 bg-black/10" />
@@ -247,7 +368,7 @@ const Services = () => {
 
                     <Link
                       to="/contact"
-                      className="mt-7 inline-flex w-fit border-b border-[#8c7650] pb-1 text-sm font-bold text-black transition-colors hover:text-[#8c7650]"
+                      className="service-text-link mt-7 inline-flex w-fit border-b border-[#8c7650] pb-1 text-sm font-bold text-black hover:text-[#8c7650]"
                     >
                       Discuss This Service
                     </Link>
@@ -259,9 +380,10 @@ const Services = () => {
         </div>
       </section>
 
+      {/* Publisher Vetting */}
       <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
+          <div className="service-reveal max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8c7650]">
               Our Review Process
             </p>
@@ -284,12 +406,13 @@ const Services = () => {
               return (
                 <article
                   key={step.number}
-                  className="border border-neutral-200 p-6 transition-colors hover:border-[#b69a68] sm:p-7"
+                  className="service-reveal service-card border border-neutral-200 p-6 sm:p-7"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-bold tracking-widest text-[#8c7650]">
                       {step.number}
                     </span>
+
                     <Icon size={23} className="text-neutral-500" />
                   </div>
 
@@ -307,7 +430,8 @@ const Services = () => {
         </div>
       </section>
 
-      <section className="border-y border-neutral-200 bg-neutral-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+      {/* Domain Rating */}
+      <section className="service-reveal border-y border-neutral-200 bg-neutral-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8c7650]">
@@ -340,14 +464,15 @@ const Services = () => {
         </div>
       </section>
 
-      <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+      {/* Editorial and Digital PR */}
+      <section className="service-reveal bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div className="overflow-hidden bg-neutral-100">
             <img
               src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1200&q=85"
               alt="Editorial and digital publishing"
               loading="lazy"
-              className="h-64 w-full object-cover sm:h-80 lg:h-[420px]"
+              className="service-image h-64 w-full object-cover sm:h-80 lg:h-[420px]"
             />
           </div>
 
@@ -379,7 +504,7 @@ const Services = () => {
 
             <Link
               to="/contact"
-              className="mt-7 inline-flex min-h-12 items-center justify-center rounded-md bg-[#8c7650] px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#6f5c3d]"
+              className="service-cta mt-7 inline-flex min-h-12 items-center justify-center rounded-md bg-[#8c7650] px-7 py-3.5 text-sm font-bold text-white hover:bg-[#6f5c3d]"
             >
               Discuss Your Campaign
             </Link>
@@ -387,9 +512,10 @@ const Services = () => {
         </div>
       </section>
 
+      {/* Who We Work With */}
       <section className="bg-neutral-50 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
+          <div className="service-reveal max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8c7650]">
               Who We Work With
             </p>
@@ -411,7 +537,7 @@ const Services = () => {
               return (
                 <article
                   key={audience.title}
-                  className="border border-neutral-200 bg-white p-6 sm:p-8"
+                  className="service-reveal service-card border border-neutral-200 bg-white p-6 sm:p-8"
                 >
                   <Icon size={26} className="text-[#8c7650]" />
 
@@ -429,7 +555,8 @@ const Services = () => {
         </div>
       </section>
 
-      <section className="bg-black px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+      {/* Final CTA */}
+      <section className="service-reveal bg-black px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#c5ad83]">
@@ -450,7 +577,7 @@ const Services = () => {
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col">
             <Link
               to="/contact"
-              className="inline-flex min-h-12 items-center justify-center rounded-md bg-[#8c7650] px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#6f5c3d]"
+              className="service-cta inline-flex min-h-12 items-center justify-center rounded-md bg-[#8c7650] px-7 py-3.5 text-sm font-bold text-white hover:bg-[#6f5c3d]"
             >
               Request a Quote
             </Link>
